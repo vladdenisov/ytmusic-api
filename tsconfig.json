@@ -13,6 +13,6 @@
     "node_modules",
     "dist",
     "cookie.json",
-    "test"
+    "testing"
   ]
 }
