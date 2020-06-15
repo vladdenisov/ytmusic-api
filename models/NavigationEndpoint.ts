@@ -2,7 +2,7 @@ export default interface NavigationEndpoint {
     browseEndpoint?: {
         browseId: string, 
         pageType: string
-    }
+    },
     watchEndpoint?: {
         params?: string, 
         playlistId?: string,
@@ -11,5 +11,6 @@ export default interface NavigationEndpoint {
     watchPlaylistEndpoint?: {
         playlistId: string,
         params: string
-    }
+    },
+    clickTrackingParams: string
 }
