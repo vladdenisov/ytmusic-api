@@ -108,3 +108,5 @@ dist
 .vscode-test
 
 cookie.json
+
+./dist
