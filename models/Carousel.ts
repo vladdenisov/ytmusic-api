@@ -1,6 +1,6 @@
-import CarouselItem from './CarouselItem';
+import CarouselItem from './CarouselItem'
 export default interface Carousel {
-    readonly title: string
-    readonly strapline?: string
-    readonly content: Array<CarouselItem>
+  readonly title: string
+  readonly strapline?: string
+  readonly content: Array<CarouselItem>
 }

@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint \"{,!(node_modules)/**/}*.{js,jsx}\" --fix",
+    "lint": "prettier \"{,!(node_modules)/**/}*.{ts,js}\" --write",
     "build": "tsc"
   },
   "author": "Vlad Denisov",

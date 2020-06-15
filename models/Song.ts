@@ -1,3 +1,3 @@
 // export interface Song {
-//     readonly 
+//     readonly
 // }
