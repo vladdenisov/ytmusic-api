@@ -14,7 +14,7 @@ const getAuthToken = (raw_cookie: string): string => {
   )}`
 }
 
-export const generateBody = (id: string, type?: string): string => {
+export const generateBody = (id?: string, type?: string): string | object => {
   const context = {
     client: {
       clientName: 'WEB_REMIX',
@@ -77,11 +77,12 @@ export const generateBody = (id: string, type?: string): string => {
       },
       browseId: id
     })
-  else
+  else if (id)
     return JSON.stringify({
       context,
       browseId: id
     })
+  else return { context }
 }
 export const generateHeaders = (cookie: string): object => {
   const token = getAuthToken(cookie)
@@ -98,15 +99,20 @@ export const generateHeaders = (cookie: string): object => {
     Cookie: cookie
   }
 }
-export const sendRequest = async (c: string, id: string, type?: string) => {
+export const sendRequest = async (
+  c: string,
+  args: { id?: string; type?: string; body?: object; endpoint: string }
+) => {
   const headers: object = generateHeaders(c)
   const options: object = {
     method: 'POST',
     headers: headers,
-    body: generateBody(id, type)
+    body: args.body
+      ? JSON.stringify(args.body)
+      : generateBody(args.id, args.type)
   }
   return fetch(
-    'https://music.youtube.com/youtubei/v1/browse?alt=json&key=AIzaSyC9XL3ZjWddXya6X74dJoCTL-WEYFDNX30',
+    `https://music.youtube.com/youtubei/v1/${args.endpoint}?alt=json&key=AIzaSyC9XL3ZjWddXya6X74dJoCTL-WEYFDNX30`,
     options
   ).then((data) => data.json())
 }

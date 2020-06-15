@@ -5,7 +5,10 @@ import Subtitle from '../../models/Subtitle'
 import * as utils from '../utils'
 
 export const getHomePage = (cookie: string) => async (): Promise<HomePage> => {
-  const response = await utils.sendRequest(cookie, 'FEmusic_home')
+  const response = await utils.sendRequest(cookie, {
+    id: 'FEmusic_home',
+    endpoint: 'browse'
+  })
   const data =
     response.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer
   const contents = data.content.sectionListRenderer.contents

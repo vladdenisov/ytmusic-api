@@ -4,7 +4,11 @@ import * as utils from '../utils'
 export const getPlaylist = (cookie: string) => async (
   id: string
 ): Promise<Playlist> => {
-  const response = await utils.sendRequest(cookie, `VL${id}`, 'PLAYLIST')
+  const response = await utils.sendRequest(cookie, {
+    id: `VL${id}`,
+    type: 'PLAYLIST',
+    endpoint: 'browse'
+  })
   const header = response.header.musicDetailHeaderRenderer
     ? response.header.musicDetailHeaderRenderer
     : response.header.musicEditablePlaylistDetailHeaderRenderer.header
@@ -38,4 +42,30 @@ export const getPlaylist = (cookie: string) => async (
     })
   })
   return playlist
+}
+export const addToPlaylist = (cookie: string) => async (
+  ids: string[],
+  playlistId: string
+): Promise<{
+  status: string
+  playlistName?: string
+  ids: string[]
+  playlistId: string
+}> => {
+  const body: any = utils.generateBody()
+  body.playlistId = playlistId
+  body.actions = [{ action: 'ACTION_ADD_VIDEO', addedVideoId: 'Kr4EQDVETuA' }]
+  const response = await utils.sendRequest(cookie, {
+    body,
+    endpoint: 'browse/edit_playlist'
+  })
+  console.log(response)
+  return {
+    status: response.status,
+    playlistName:
+      response.actions[0].openPopupAction.popup.notificationActionRenderer
+        .responseText.runs[1].text,
+    ids,
+    playlistId
+  }
 }
