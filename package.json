@@ -1,0 +1,42 @@
+{
+  "name": "ytmusic",
+  "version": "0.0.1",
+  "description": "Unofficial Youtube Music Api",
+  "main": "bin/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint \"{,!(node_modules)/**/}*.{js,jsx}\" --fix"
+  },
+  "author": "Vlad Denisov",
+  "license": "MIT",
+  "eslintConfig": {
+    "extends": "@logux/eslint-config",
+    "rules": {
+      "global-require": "off",
+      "node/no-unpublished-require": "off",
+      "prefer-let/prefer-let": "off",
+      "max-len": "off",
+      "no-invalid-this": "off"
+    },
+    "overrides": []
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "cookie": "^0.4.1",
+    "node-fetch": "^2.6.0",
+    "sha1": "^1.1.1"
+  },
+  "devDependencies": {
+    "@logux/eslint-config": "^36.1.2",
+    "eslint": "^6.8.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jest": "^23.8.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prefer-let": "^1.0.1",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-security": "^1.4.0",
+    "eslint-plugin-standard": "^4.0.1",
+    "eslint-plugin-unicorn": "^18.0.1"
+  }
+}
