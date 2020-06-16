@@ -4,6 +4,18 @@ import CarouselItem from '../../models/CarouselItem'
 import Subtitle from '../../models/Subtitle'
 import * as utils from '../utils'
 
+/**
+ * Returns First Part of HomePage
+ *
+ * @usage
+ * ```js
+ *  const api = new YTMUSIC(cookie)
+ *  const data = await api.getHomePage()
+ * ```
+ * You can call `data.continue()` to get next part
+ * @returns {@link HomePage}
+ *
+ */
 export const getHomePage = (
   cookie: string,
   userID?: string
@@ -146,7 +158,17 @@ const getHomePageC = (
 
   return home
 }
-
+/**
+ * Returns Full HomePage
+ *
+ * @usage
+ * ```js
+ *  const api = new YTMUSIC(cookie)
+ *  const data = await api.getFullHomePage()
+ * ```
+ * @returns {@link HomePage}
+ *
+ */
 export const getFullHomePage = (
   cookie: string,
   userID?: string

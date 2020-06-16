@@ -7,7 +7,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "prettier \"{,!(node_modules)/**/}*.{ts,js}\" --write",
-    "build": "tsc"
+    "build": "tsc",
+    "docs": "typedoc --out docs --theme node_modules/eledoc/bin/default/"
+  },
+  "husky": {
+    "hooks": {
+      "precommit": "npm run lint && npm run docs"
+    }
   },
   "author": "Vlad Denisov",
   "license": "MIT",
@@ -27,7 +33,10 @@
   "devDependencies": {
     "@types/cookie": "^0.4.0",
     "@types/node-fetch": "^2.5.7",
+    "eledoc": "^0.2.1",
+    "husky": "^4.2.5",
     "prettier": "^2.0.5",
+    "typedoc": "^0.17.7",
     "typescript": "^3.9.5"
   }
 }
