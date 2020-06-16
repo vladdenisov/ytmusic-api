@@ -10,11 +10,6 @@
     "build": "tsc",
     "docs": "typedoc --out docs --theme node_modules/eledoc/bin/default/"
   },
-  "husky": {
-    "hooks": {
-      "precommit": "npm run lint && npm run docs"
-    }
-  },
   "author": "Vlad Denisov",
   "license": "MIT",
   "prettier": {
