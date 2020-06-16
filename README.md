@@ -32,7 +32,15 @@ Build it
 You will see `dist` folder, where all built files are stored.
 
 ### Usage
-Get the auth cookie from requests to YTMusic in your browser. 
+
+#### Getting the cookie
+Get the auth cookie from requests to YTMusic in your browser: 
+
+ - Open [YouTube Music](https://music.youtube.com/) in browser
+ - Go to the developer tools (Ctrl-Shift-I) and find an authenticated POST request. You can filter for /browse to easily find a suitable request.
+ - Copy `cookie` from `Request Headers`
+ 
+#### Using in code
 Import lib to your code:
 ```js
   const { YTMUSIC } = require('./dist/index.js')
