@@ -4,23 +4,30 @@ import CarouselItem from '../../models/CarouselItem'
 import Subtitle from '../../models/Subtitle'
 import * as utils from '../utils'
 
-export const getHomePage = (cookie: string) => async (): Promise<HomePage> => {
+export const getHomePage = (
+  cookie: string,
+  userID?: string
+) => async (): Promise<HomePage> => {
   const response = await utils.sendRequest(cookie, {
     id: 'FEmusic_home',
-    endpoint: 'browse'
+    endpoint: 'browse',
+    userID: userID
   })
   const data =
     response.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer
   const contents = data.content.sectionListRenderer.contents
   let content: Carousel[] = []
   contents.map((carousel: any) => {
+    if (carousel.musicTastebuilderShelfRenderer) return
     const ctx = carousel.musicCarouselShelfRenderer
+      ? carousel.musicCarouselShelfRenderer
+      : carousel.musicImmersiveCarouselShelfRenderer
     let items: CarouselItem[] = []
     ctx.contents.map((e: any) => {
       e = e.musicTwoRowItemRenderer
       let temp: CarouselItem = {
         thumbnail: [],
-        title: e.title,
+        title: e.title.runs[0],
         subtitle: [],
         navigationEndpoint: e.navigationEndpoint
       }
@@ -40,20 +47,63 @@ export const getHomePage = (cookie: string) => async (): Promise<HomePage> => {
       items.push(temp)
     })
     content.push({
-      title: ctx.header.musicCarouselShelfBasicHeaderRenderer.title.runs.join(
-        ' '
-      ),
+      title:
+        ctx.header.musicCarouselShelfBasicHeaderRenderer.title.runs[0].text,
       content: items,
       strapline: ctx.header.musicCarouselShelfBasicHeaderRenderer.strapline
-        ? ctx.header.musicCarouselShelfBasicHeaderRenderer.strapline.runs.join(
-            ''
-          )
+        ? ctx.header.musicCarouselShelfBasicHeaderRenderer.strapline.runs
         : undefined
     })
   })
-  return {
+  const home: HomePage = {
     title: data.title,
     browseId: data.endpoint.browseEndpoint.browseId,
     content
   }
+  if (data.content.sectionListRenderer.continuations) {
+    home.continue = getHomePageC(
+      cookie,
+      data.content.sectionListRenderer.continuations[0].nextContinuationData
+        .continuation,
+      data.content.sectionListRenderer.continuations[0].nextContinuationData
+        .clickTrackingParams,
+      userID
+    )
+  }
+  return home
+}
+
+const getHomePageC = (
+  cookie: string,
+  cToken: string,
+  itct: string,
+  userID?: string
+) => async (): Promise<HomePage> => {
+  const body: any = utils.generateBody({ userID })
+  const response = await utils.sendRequest(cookie, {
+    endpoint: 'browse',
+    body,
+    cToken,
+    itct
+  })
+  const data = response.continuationContents.sectionListContinuation
+
+  const home: HomePage = {
+    title:
+      response.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer
+        .title,
+    content: [],
+    browseId:
+      response.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer
+        .tabIdentifier
+  }
+  if (data.continuations) {
+    home.continue = getHomePageC(
+      cookie,
+      data.continuations[0].nextContinuationData.continuation,
+      data.continuations[0].nextContinuationData.clickTrackingParams,
+      userID
+    )
+  }
+  return home
 }

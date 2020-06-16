@@ -40,6 +40,9 @@ Import lib to your code:
 Create new Instance of api with your cookie: 
 ```js
   const api = new YTMUSIC("cookie")
+
+  // or if you want it to use not default account, specify userID (refer to docs to get it): 
+  const api = new YTMUSIC("cookie", "userID")
 ```
 Use it: 
 ```js

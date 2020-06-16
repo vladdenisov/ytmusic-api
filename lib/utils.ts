@@ -14,8 +14,12 @@ const getAuthToken = (raw_cookie: string): string => {
   )}`
 }
 
-export const generateBody = (id?: string, type?: string): string | object => {
-  const context = {
+export const generateBody = (args: {
+  id?: string
+  type?: string
+  userID?: string
+}): string | object => {
+  const context: any = {
     client: {
       clientName: 'WEB_REMIX',
       clientVersion: '0.1',
@@ -61,26 +65,27 @@ export const generateBody = (id?: string, type?: string): string | object => {
       ],
       sessionIndex: 0
     },
-    user: { onBehalfOfUser: '116734035933352489474', enableSafetyMode: false },
+    user: { enableSafetyMode: false },
     clickTracking: {
       clickTrackingParams: 'IhMI5aKttYiE6gIVhEGbCh0o9w8rMghleHRlcm5hbA=='
     },
     activePlayers: {}
   }
-  if (type)
+  if (args.userID) context.user.onBehalfOfUser = args.userID
+  if (args.type)
     return JSON.stringify({
       context,
       browseEndpointContextSupportedConfigs: {
         browseEndpointContextMusicConfig: {
-          pageType: 'MUSIC_PAGE_TYPE_' + type
+          pageType: 'MUSIC_PAGE_TYPE_' + args.type
         }
       },
-      browseId: id
+      browseId: args.id
     })
-  else if (id)
+  else if (args.id)
     return JSON.stringify({
       context,
-      browseId: id
+      browseId: args.id
     })
   else return { context }
 }
@@ -101,7 +106,15 @@ export const generateHeaders = (cookie: string): object => {
 }
 export const sendRequest = async (
   c: string,
-  args: { id?: string; type?: string; body?: object; endpoint: string }
+  args: {
+    id?: string
+    type?: string
+    body?: object
+    endpoint: string
+    userID?: string
+    cToken?: string
+    itct?: string
+  }
 ) => {
   const headers: object = generateHeaders(c)
   const options: object = {
@@ -109,10 +122,22 @@ export const sendRequest = async (
     headers: headers,
     body: args.body
       ? JSON.stringify(args.body)
-      : generateBody(args.id, args.type)
+      : generateBody({ id: args.id, type: args.type, userID: args.userID })
   }
+  const addParams: string = `${
+    args.cToken
+      ? 'ctoken=' +
+        args.cToken +
+        '&continuation=' +
+        args.cToken +
+        '&itct=' +
+        args.itct +
+        '&'
+      : ''
+  }`
+  console.log(addParams)
   return fetch(
-    `https://music.youtube.com/youtubei/v1/${args.endpoint}?alt=json&key=AIzaSyC9XL3ZjWddXya6X74dJoCTL-WEYFDNX30`,
+    `https://music.youtube.com/youtubei/v1/${args.endpoint}?${addParams}alt=json&key=AIzaSyC9XL3ZjWddXya6X74dJoCTL-WEYFDNX30`,
     options
   ).then((data) => data.json())
 }

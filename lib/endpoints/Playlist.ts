@@ -1,7 +1,7 @@
 import Playlist from '../../models/Playlist'
 import * as utils from '../utils'
 
-export const getPlaylist = (cookie: string) => async (
+export const getPlaylist = (cookie: string, userID?: string) => async (
   id: string
 ): Promise<Playlist> => {
   const response = await utils.sendRequest(cookie, {
@@ -43,7 +43,7 @@ export const getPlaylist = (cookie: string) => async (
   })
   return playlist
 }
-export const addToPlaylist = (cookie: string) => async (
+export const addToPlaylist = (cookie: string, userID?: string) => async (
   ids: string[],
   playlistId: string
 ): Promise<{
@@ -52,8 +52,9 @@ export const addToPlaylist = (cookie: string) => async (
   ids: string[]
   playlistId: string
 }> => {
-  const body: any = utils.generateBody()
+  const body: any = utils.generateBody({ userID: userID })
   body.playlistId = playlistId
+  if (userID) body.context.user.onBehalfOfUser = userID
   body.actions = [{ action: 'ACTION_ADD_VIDEO', addedVideoId: 'Kr4EQDVETuA' }]
   const response = await utils.sendRequest(cookie, {
     body,
