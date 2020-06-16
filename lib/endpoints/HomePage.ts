@@ -87,12 +87,50 @@ const getHomePageC = (
     itct
   })
   const data = response.continuationContents.sectionListContinuation
+  const content: Carousel[] = []
+  data.contents.map((carousel: any) => {
+    if (carousel.musicTastebuilderShelfRenderer) return
+    const ctx = carousel.musicCarouselShelfRenderer
+      ? carousel.musicCarouselShelfRenderer
+      : carousel.musicImmersiveCarouselShelfRenderer
+    let items: CarouselItem[] = []
+    ctx.contents.map((e: any) => {
+      e = e.musicTwoRowItemRenderer
+      let temp: CarouselItem = {
+        thumbnail: [],
+        title: e.title.runs[0],
+        subtitle: [],
+        navigationEndpoint: e.navigationEndpoint
+      }
+      e.thumbnailRenderer.musicThumbnailRenderer.thumbnail.thumbnails.map(
+        (el: any) => temp.thumbnail.push(el)
+      )
+      e.subtitle.runs.map((el: any) => {
+        let sub: Subtitle = {
+          text: el.text
+        }
+        if (el.navigationEndpoint) {
+          sub.navigationEndpoint = el.navigationEndpoint
+        }
+        temp.subtitle.push(sub)
+      })
 
+      items.push(temp)
+    })
+    content.push({
+      title:
+        ctx.header.musicCarouselShelfBasicHeaderRenderer.title.runs[0].text,
+      content: items,
+      strapline: ctx.header.musicCarouselShelfBasicHeaderRenderer.strapline
+        ? ctx.header.musicCarouselShelfBasicHeaderRenderer.strapline.runs
+        : undefined
+    })
+  })
   const home: HomePage = {
     title:
       response.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer
         .title,
-    content: [],
+    content,
     browseId:
       response.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer
         .tabIdentifier
@@ -105,5 +143,19 @@ const getHomePageC = (
       userID
     )
   }
+
   return home
+}
+
+export const getFullHomePage = (
+  cookie: string,
+  userID?: string
+) => async () => {
+  const home = await getHomePage(cookie, userID)()
+  while (true) {
+    const t = await home.continue()
+    home.content?.push(...t.content)
+    if (!t.continue) return home
+    home.continue = t.continue
+  }
 }

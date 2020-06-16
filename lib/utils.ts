@@ -135,7 +135,6 @@ export const sendRequest = async (
         '&'
       : ''
   }`
-  console.log(addParams)
   return fetch(
     `https://music.youtube.com/youtubei/v1/${args.endpoint}?${addParams}alt=json&key=AIzaSyC9XL3ZjWddXya6X74dJoCTL-WEYFDNX30`,
     options
