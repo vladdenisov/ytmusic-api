@@ -1,6 +1,18 @@
 import Playlist from '../../models/Playlist'
 import * as utils from '../utils'
-
+/**
+ * Returns Playlist Info
+ *
+ * @usage
+ *
+ * ```js
+ *  const api = new YTMUSIC(cookie)
+ *  const data = await api.getPlaylist('RDAMVM5hFevwJ4JXI')
+ * ```
+ * @param id - playlist ID
+ * @returns {@link Playlist}
+ *
+ */
 export const getPlaylist = (cookie: string, userID?: string) => async (
   id: string
 ): Promise<Playlist> => {
@@ -43,6 +55,26 @@ export const getPlaylist = (cookie: string, userID?: string) => async (
   })
   return playlist
 }
+/**
+ * Add song(s) to playlist
+ *
+ * @usage
+ *
+ * ```js
+ *  const api = new YTMUSIC(cookie)
+ *  const data = await api.addToPlaylist(['-mLpe7KUg9U', '5hFevwJ4JXI'], 'RDAMVM5hFevwJ4JXI')
+ * ```
+ * @param ids - Array of song ids to add
+ * @param playlistId -  ID of playlist
+ * @returns ```js
+ * {
+  status: string
+  playlistName?: string
+  ids: string[]
+  playlistId: string
+}
+```
+ */
 export const addToPlaylist = (cookie: string, userID?: string) => async (
   ids: string[],
   playlistId: string

@@ -8,10 +8,12 @@ import * as utils from '../utils'
  * Returns First Part of HomePage
  *
  * @usage
+ *
  * ```js
  *  const api = new YTMUSIC(cookie)
  *  const data = await api.getHomePage()
  * ```
+ *
  * You can call `data.continue()` to get next part
  * @returns {@link HomePage}
  *
@@ -84,7 +86,21 @@ export const getHomePage = (
   }
   return home
 }
-
+/**
+ * Returns Continue of HomePage
+ *
+ * @usage
+ *
+ * ```js
+ *  const api = new YTMUSIC(cookie)
+ *  const data = await api.getHomePage()
+ * ```
+ * @param cToken Continue token from prev. response
+ * @param itct clickTrackingParams from prev. response
+ * You can call `data.continue()` to get next part
+ * @returns {@link HomePage}
+ *
+ */
 const getHomePageC = (
   cookie: string,
   cToken: string,

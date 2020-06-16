@@ -1,19 +1,28 @@
 import cookie from 'cookie'
+/**
+ * @ignore
+ */
 const sha1 = require('sha1')
 import fetch from 'node-fetch'
-
+/**
+ * @ignore
+ */
 const getSAPISID = (raw: string): string => {
   const parsed = cookie.parse(raw)
   return parsed['SAPISID']
 }
-
+/**
+ * @ignore
+ */
 const getAuthToken = (raw_cookie: string): string => {
   const date = new Date().getTime()
   return `SAPISIDHASH ${date}_${sha1(
     date + ' ' + getSAPISID(raw_cookie) + ' ' + 'https://music.youtube.com'
   )}`
 }
-
+/**
+ * @ignore
+ */
 export const generateBody = (args: {
   id?: string
   type?: string
@@ -89,6 +98,9 @@ export const generateBody = (args: {
     })
   else return { context }
 }
+/**
+ * @ignore
+ */
 export const generateHeaders = (cookie: string): object => {
   const token = getAuthToken(cookie)
   return {
@@ -104,6 +116,9 @@ export const generateHeaders = (cookie: string): object => {
     Cookie: cookie
   }
 }
+/**
+ * @ignore
+ */
 export const sendRequest = async (
   c: string,
   args: {

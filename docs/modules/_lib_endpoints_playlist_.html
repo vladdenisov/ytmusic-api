@@ -141,6 +141,11 @@
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
 						<li class="tsd-signature tsd-kind-icon">add<wbr>ToPlaylist<span class="tsd-signature-symbol">(</span>cookie<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, userID<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">(Anonymous function)</span></li>
 					</ul>
+					<div class="tsd-comment">
+						<div class="lead">
+							<p>Add song(s) to playlist</p>
+						</div>
+					</div>
 					<h4 class="tsd-parameters-title">Parameters</h4>
 					<ul class="tsd-parameters">
 						<li>
@@ -151,10 +156,22 @@
 						</li>
 					</ul>
 					<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">(Anonymous function)</span>    </h4>
+					<pre><code class="language-js">{
+<span class="hljs-attr">status</span>: string
+playlistName?: string
+<span class="hljs-attr">ids</span>: string[]
+<span class="hljs-attr">playlistId</span>: string
+}</code></pre>
 					</ul>
+					<div class="tsd-comment">
+						<h4>usage</h4>
+						<p><pre><code class="language-js"> <span class="hljs-keyword">const</span> api = <span class="hljs-keyword">new</span> YTMUSIC(cookie)
+ <span class="hljs-keyword">const</span> data = <span class="hljs-keyword">await</span> api.addToPlaylist([<span class="hljs-string">&#x27;-mLpe7KUg9U&#x27;</span>, <span class="hljs-string">&#x27;5hFevwJ4JXI&#x27;</span>], <span class="hljs-string">&#x27;RDAMVM5hFevwJ4JXI&#x27;</span>)</code></pre>
+						</p>
+					</div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/529e4dd/lib/endpoints/Playlist.ts#L46">lib/endpoints/Playlist.ts:46</a></li>
+							<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/3eb4861/lib/endpoints/Playlist.ts#L78">lib/endpoints/Playlist.ts:78</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -164,6 +181,11 @@
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
 						<li class="tsd-signature tsd-kind-icon">get<wbr>Playlist<span class="tsd-signature-symbol">(</span>cookie<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, userID<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">(Anonymous function)</span></li>
 					</ul>
+					<div class="tsd-comment">
+						<div class="lead">
+							<p>Returns Playlist Info</p>
+						</div>
+					</div>
 					<h4 class="tsd-parameters-title">Parameters</h4>
 					<ul class="tsd-parameters">
 						<li>
@@ -174,10 +196,17 @@
 						</li>
 					</ul>
 					<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">(Anonymous function)</span>    </h4>
+					<p><a href="../interfaces/_models_playlist_.playlist.html">Playlist</a></p>
 					</ul>
+					<div class="tsd-comment">
+						<h4>usage</h4>
+						<p><pre><code class="language-js"> <span class="hljs-keyword">const</span> api = <span class="hljs-keyword">new</span> YTMUSIC(cookie)
+ <span class="hljs-keyword">const</span> data = <span class="hljs-keyword">await</span> api.getPlaylist(<span class="hljs-string">&#x27;RDAMVM5hFevwJ4JXI&#x27;</span>)</code></pre>
+						</p>
+					</div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/529e4dd/lib/endpoints/Playlist.ts#L4">lib/endpoints/Playlist.ts:4</a></li>
+							<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/3eb4861/lib/endpoints/Playlist.ts#L16">lib/endpoints/Playlist.ts:16</a></li>
 						</ul>
 					</aside>
 				</section>
