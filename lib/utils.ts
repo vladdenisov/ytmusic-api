@@ -33,7 +33,7 @@ export const generateBody = (args: {
       clientName: 'WEB_REMIX',
       clientVersion: '0.1',
       hl: 'en',
-      gl: 'RU',
+      gl: 'EN',
       experimentIds: [],
       experimentsToken: '',
       browserName: 'Edge Chromium',

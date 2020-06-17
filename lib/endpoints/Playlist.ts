@@ -87,7 +87,8 @@ export const addToPlaylist = (cookie: string, userID?: string) => async (
   const body: any = utils.generateBody({ userID: userID })
   body.playlistId = playlistId
   if (userID) body.context.user.onBehalfOfUser = userID
-  body.actions = [{ action: 'ACTION_ADD_VIDEO', addedVideoId: 'Kr4EQDVETuA' }]
+  body.actions = [{ action: 'ACTION_ADD_VIDEO', addedVideoId: ids[0] }]
+  console.log(body)
   const response = await utils.sendRequest(cookie, {
     body,
     endpoint: 'browse/edit_playlist'
