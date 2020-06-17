@@ -20,12 +20,16 @@ import * as utils from '../utils'
  */
 export const getHomePage = (
   cookie: string,
-  userID?: string
+  args: {
+    userID?: string
+    authUser?: number
+  }
 ) => async (): Promise<HomePage> => {
   const response = await utils.sendRequest(cookie, {
     id: 'FEmusic_home',
     endpoint: 'browse',
-    userID: userID
+    userID: args.userID,
+    authUser: args.authUser
   })
   const data =
     response.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer
@@ -81,7 +85,7 @@ export const getHomePage = (
         .continuation,
       data.content.sectionListRenderer.continuations[0].nextContinuationData
         .clickTrackingParams,
-      userID
+      args
     )
   }
   return home
@@ -105,14 +109,18 @@ const getHomePageC = (
   cookie: string,
   cToken: string,
   itct: string,
-  userID?: string
+  args: {
+    userID?: string
+    authUser?: number
+  }
 ) => async (): Promise<HomePage> => {
-  const body: any = utils.generateBody({ userID })
+  const body: any = utils.generateBody({ userID: args.userID })
   const response = await utils.sendRequest(cookie, {
     endpoint: 'browse',
     body,
     cToken,
-    itct
+    itct,
+    authUser: args.authUser
   })
   const data = response.continuationContents.sectionListContinuation
   const content: Carousel[] = []
@@ -168,7 +176,7 @@ const getHomePageC = (
       cookie,
       data.continuations[0].nextContinuationData.continuation,
       data.continuations[0].nextContinuationData.clickTrackingParams,
-      userID
+      args
     )
   }
 
@@ -187,9 +195,12 @@ const getHomePageC = (
  */
 export const getFullHomePage = (
   cookie: string,
-  userID?: string
+  args: {
+    userID?: string
+    authUser?: number
+  }
 ) => async () => {
-  const home = await getHomePage(cookie, userID)()
+  const home = await getHomePage(cookie, args)()
   while (true) {
     const t = await home.continue()
     home.content?.push(...t.content)

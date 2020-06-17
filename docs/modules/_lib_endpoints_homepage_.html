@@ -92,6 +92,8 @@
 						</li>                        <li class=" tsd-kind-module">
 						<a href="_lib_endpoints_playlist_.html">&quot;lib/endpoints/<wbr>Playlist&quot;</a>
 						</li>                        <li class=" tsd-kind-module">
+						<a href="_lib_endpoints_search_.html">&quot;lib/endpoints/<wbr>Search&quot;</a>
+						</li>                        <li class=" tsd-kind-module">
 						<a href="_lib_utils_.html">&quot;lib/utils&quot;</a>
 						</li>                        <li class=" tsd-kind-module">
 						<a href="_models_carousel_.html">&quot;models/<wbr>Carousel&quot;</a>
@@ -103,6 +105,8 @@
 						<a href="_models_navigationendpoint_.html">&quot;models/<wbr>Navigation<wbr>Endpoint&quot;</a>
 						</li>                        <li class=" tsd-kind-module">
 						<a href="_models_playlist_.html">&quot;models/<wbr>Playlist&quot;</a>
+						</li>                        <li class=" tsd-kind-module">
+						<a href="_models_search_.html">&quot;models/<wbr>Search&quot;</a>
 						</li>                        <li class=" tsd-kind-module">
 						<a href="_models_song_.html">&quot;models/<wbr>Song&quot;</a>
 						</li>                        <li class=" tsd-kind-module">
@@ -149,7 +153,7 @@
 					<a name="getfullhomepage" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> get<wbr>Full<wbr>Home<wbr>Page</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Full<wbr>Home<wbr>Page<span class="tsd-signature-symbol">(</span>cookie<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, userID<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">(Anonymous function)</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Full<wbr>Home<wbr>Page<span class="tsd-signature-symbol">(</span>cookie<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">(Anonymous function)</span></li>
 					</ul>
 					<div class="tsd-comment">
 						<div class="lead">
@@ -162,7 +166,15 @@
 							<span class="name">cookie</span>: <span class="tsd-signature-type">string</span>
 						</li>
 						<li>
-							<span class="name">userID</span>: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span> <span class="tsd-flag ts-flagOptional">Optional</span>
+							<span class="name">args</span>: <span class="tsd-signature-type">object</span>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter">
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> auth<wbr>User<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li class="tsd-parameter">
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> userID<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
 						</li>
 					</ul>
 					<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">(Anonymous function)</span>    </h4>
@@ -176,7 +188,7 @@
 					</div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/3eb4861/lib/endpoints/HomePage.ts#L188">lib/endpoints/HomePage.ts:188</a></li>
+							<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/90306fd/lib/endpoints/HomePage.ts#L196">lib/endpoints/HomePage.ts:196</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -184,7 +196,7 @@
 					<a name="gethomepage" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> get<wbr>Home<wbr>Page</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Home<wbr>Page<span class="tsd-signature-symbol">(</span>cookie<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, userID<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">(Anonymous function)</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Home<wbr>Page<span class="tsd-signature-symbol">(</span>cookie<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">(Anonymous function)</span></li>
 					</ul>
 					<div class="tsd-comment">
 						<div class="lead">
@@ -197,7 +209,15 @@
 							<span class="name">cookie</span>: <span class="tsd-signature-type">string</span>
 						</li>
 						<li>
-							<span class="name">userID</span>: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span> <span class="tsd-flag ts-flagOptional">Optional</span>
+							<span class="name">args</span>: <span class="tsd-signature-type">object</span>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter">
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> auth<wbr>User<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li class="tsd-parameter">
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> userID<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
 						</li>
 					</ul>
 					<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">(Anonymous function)</span>    </h4>
@@ -212,7 +232,7 @@
 					</div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/3eb4861/lib/endpoints/HomePage.ts#L21">lib/endpoints/HomePage.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/90306fd/lib/endpoints/HomePage.ts#L21">lib/endpoints/HomePage.ts:21</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -220,7 +240,7 @@
 					<a name="gethomepagec" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> get<wbr>Home<wbr>PageC</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Home<wbr>PageC<span class="tsd-signature-symbol">(</span>cookie<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, cToken<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, itct<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, userID<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">(Anonymous function)</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Home<wbr>PageC<span class="tsd-signature-symbol">(</span>cookie<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, cToken<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, itct<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">(Anonymous function)</span></li>
 					</ul>
 					<div class="tsd-comment">
 						<div class="lead">
@@ -250,7 +270,15 @@
 							</div>
 						</li>
 						<li>
-							<span class="name">userID</span>: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span> <span class="tsd-flag ts-flagOptional">Optional</span>
+							<span class="name">args</span>: <span class="tsd-signature-type">object</span>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter">
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> auth<wbr>User<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li class="tsd-parameter">
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> userID<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
 						</li>
 					</ul>
 					<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">(Anonymous function)</span>    </h4>
@@ -264,7 +292,7 @@
 					</div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/3eb4861/lib/endpoints/HomePage.ts#L104">lib/endpoints/HomePage.ts:104</a></li>
+							<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/90306fd/lib/endpoints/HomePage.ts#L108">lib/endpoints/HomePage.ts:108</a></li>
 						</ul>
 					</aside>
 				</section>

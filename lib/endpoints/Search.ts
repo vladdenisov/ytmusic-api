@@ -1,10 +1,10 @@
 import * as utils from '../utils'
 
-export const search = (cookie: string, userID?: string) => async (
+export const search = (cookie: string, args: any) => async (
   query: string,
   filter?: string
 ) => {
-  const body: any = utils.generateBody({ userID })
+  const body: any = utils.generateBody({ userID: args.userID })
   if (filter) {
     let param: string
     switch (filter) {
@@ -26,7 +26,8 @@ export const search = (cookie: string, userID?: string) => async (
   body.query = query
   const response = await utils.sendRequest(cookie, {
     endpoint: 'search',
-    userID,
+    userID: args.userID,
+    authUser: args.authUser,
     body
   })
   const contents = response.contents.sectionListRenderer.contents

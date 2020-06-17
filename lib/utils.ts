@@ -33,7 +33,6 @@ export const generateBody = (args: {
       clientName: 'WEB_REMIX',
       clientVersion: '0.1',
       hl: 'en',
-      gl: 'EN',
       experimentIds: [],
       experimentsToken: '',
       browserName: 'Edge Chromium',
@@ -101,8 +100,9 @@ export const generateBody = (args: {
 /**
  * @ignore
  */
-export const generateHeaders = (cookie: string): object => {
+export const generateHeaders = (cookie: string, authUser?: number): object => {
   const token = getAuthToken(cookie)
+  if (!authUser) authUser = 0
   return {
     'User-Agent':
       'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0',
@@ -110,7 +110,7 @@ export const generateHeaders = (cookie: string): object => {
     'Accept-Language': 'en-US,en;q=0.5',
     Authorization: token,
     'Content-Type': 'application/json',
-    'X-Goog-AuthUser': '0',
+    'X-Goog-AuthUser': `${authUser}`,
     'x-origin': 'https://music.youtube.com',
     'X-Goog-Visitor-Id': 'CgtvVTcxa1EtbV9hayiMu-P0BQ%3D%3D',
     Cookie: cookie
@@ -129,9 +129,10 @@ export const sendRequest = async (
     userID?: string
     cToken?: string
     itct?: string
+    authUser?: number
   }
 ) => {
-  const headers: object = generateHeaders(c)
+  const headers: object = generateHeaders(c, args.authUser)
   const options: object = {
     method: 'POST',
     headers: headers,

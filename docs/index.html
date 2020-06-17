@@ -76,6 +76,8 @@
 						</li>                        <li class=" tsd-kind-module">
 						<a href="modules/_lib_endpoints_playlist_.html">&quot;lib/endpoints/<wbr>Playlist&quot;</a>
 						</li>                        <li class=" tsd-kind-module">
+						<a href="modules/_lib_endpoints_search_.html">&quot;lib/endpoints/<wbr>Search&quot;</a>
+						</li>                        <li class=" tsd-kind-module">
 						<a href="modules/_lib_utils_.html">&quot;lib/utils&quot;</a>
 						</li>                        <li class=" tsd-kind-module">
 						<a href="modules/_models_carousel_.html">&quot;models/<wbr>Carousel&quot;</a>
@@ -87,6 +89,8 @@
 						<a href="modules/_models_navigationendpoint_.html">&quot;models/<wbr>Navigation<wbr>Endpoint&quot;</a>
 						</li>                        <li class=" tsd-kind-module">
 						<a href="modules/_models_playlist_.html">&quot;models/<wbr>Playlist&quot;</a>
+						</li>                        <li class=" tsd-kind-module">
+						<a href="modules/_models_search_.html">&quot;models/<wbr>Search&quot;</a>
 						</li>                        <li class=" tsd-kind-module">
 						<a href="modules/_models_song_.html">&quot;models/<wbr>Song&quot;</a>
 						</li>                        <li class=" tsd-kind-module">
@@ -129,8 +133,19 @@
 				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
 					<h3>Usage</h3>
 				</a>
-				<p>Get the auth cookie from requests to YTMusic in your browser.
-				Import lib to your code:</p>
+				<a href="#getting-the-cookie" id="getting-the-cookie" style="color: inherit; text-decoration: none;">
+					<h4>Getting the cookie</h4>
+				</a>
+				<p>Get the auth cookie from requests to YTMusic in your browser: </p>
+				<ul>
+					<li>Open <a href="https://music.youtube.com/">YouTube Music</a> in browser</li>
+					<li>Go to the developer tools (Ctrl-Shift-I) and find an authenticated POST request. You can filter for /browse to easily find a suitable request.</li>
+					<li>Copy <code>cookie</code> from <code>Request Headers</code></li>
+				</ul>
+				<a href="#using-in-code" id="using-in-code" style="color: inherit; text-decoration: none;">
+					<h4>Using in code</h4>
+				</a>
+				<p>Import lib to your code:</p>
 				<pre><code class="language-js">  <span class="hljs-keyword">const</span> { YTMUSIC } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./dist/index.js&#x27;</span>)</code></pre>
 				<p>Create new Instance of api with your cookie: </p>
 				<pre><code class="language-js">  <span class="hljs-keyword">const</span> api = <span class="hljs-keyword">new</span> YTMUSIC(<span class="hljs-string">&quot;cookie&quot;</span>)

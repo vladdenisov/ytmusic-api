@@ -13,13 +13,18 @@ import * as utils from '../utils'
  * @returns {@link Playlist}
  *
  */
-export const getPlaylist = (cookie: string, userID?: string) => async (
-  id: string
-): Promise<Playlist> => {
+export const getPlaylist = (
+  cookie: string,
+  args: {
+    userID?: string
+    authUser?: number
+  }
+) => async (id: string): Promise<Playlist> => {
   const response = await utils.sendRequest(cookie, {
     id: `VL${id}`,
     type: 'PLAYLIST',
-    endpoint: 'browse'
+    endpoint: 'browse',
+    authUser: args.authUser
   })
   const header = response.header.musicDetailHeaderRenderer
     ? response.header.musicDetailHeaderRenderer
@@ -75,7 +80,13 @@ export const getPlaylist = (cookie: string, userID?: string) => async (
 }
 ```
  */
-export const addToPlaylist = (cookie: string, userID?: string) => async (
+export const addToPlaylist = (
+  cookie: string,
+  args: {
+    userID?: string
+    authUser?: number
+  }
+) => async (
   ids: string[],
   playlistId: string
 ): Promise<{
@@ -84,16 +95,14 @@ export const addToPlaylist = (cookie: string, userID?: string) => async (
   ids: string[]
   playlistId: string
 }> => {
-  const body: any = utils.generateBody({ userID: userID })
+  const body: any = utils.generateBody({ userID: args.userID })
   body.playlistId = playlistId
-  if (userID) body.context.user.onBehalfOfUser = userID
+  if (args.userID) body.context.user.onBehalfOfUser = args.userID
   body.actions = [{ action: 'ACTION_ADD_VIDEO', addedVideoId: ids[0] }]
-  console.log(body)
   const response = await utils.sendRequest(cookie, {
     body,
     endpoint: 'browse/edit_playlist'
   })
-  console.log(response)
   return {
     status: response.status,
     playlistName:
@@ -101,5 +110,38 @@ export const addToPlaylist = (cookie: string, userID?: string) => async (
         .responseText.runs[1].text,
     ids,
     playlistId
+  }
+}
+
+export const createPlaylist = (
+  cookie: string,
+  args: {
+    userID?: string
+    authUser?: number
+  }
+) => async (
+  title: string,
+  privacyStatus: 'PRIVATE' | 'PUBLIC' | 'UNLISTED',
+  description?: string
+): Promise<{ id: string } | Error> => {
+  if (!description) description = ''
+  if (!['PRIVATE', 'PUBLIC', 'UNLISTED'].includes(privacyStatus))
+    throw new Error('Unknown privacyStatus')
+  if (!title) throw new Error('Title cannot be empty')
+
+  const body: any = utils.generateBody({
+    userID: args.userID
+  })
+  body.title = title
+  body.description = description
+  body.privacyStatus = privacyStatus
+  const response = await utils.sendRequest(cookie, {
+    body,
+    authUser: args.authUser,
+    endpoint: 'playlist/create'
+  })
+  if (response.error) throw new Error(response.error.status)
+  return {
+    id: response.playlistId
   }
 }

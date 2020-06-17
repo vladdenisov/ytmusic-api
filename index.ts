@@ -1,14 +1,25 @@
 import { getHomePage, getFullHomePage } from './lib/endpoints/HomePage'
-import { getPlaylist, addToPlaylist } from './lib/endpoints/Playlist'
+import {
+  getPlaylist,
+  addToPlaylist,
+  createPlaylist
+} from './lib/endpoints/Playlist'
 import { search } from './lib/endpoints/Search'
 export class YTMUSIC {
-  constructor(private cookie: string, private userID?: string) {
+  userID: string
+  authUser: number | undefined
+  constructor(
+    private cookie: string,
+    private args: { userID: string; authUser?: number }
+  ) {
     this.cookie = cookie
-    this.userID = userID
+    this.userID = args.userID
+    this.authUser = args.authUser
   }
-  getHomePage = getHomePage(this.cookie, this.userID)
-  getPlaylist = getPlaylist(this.cookie, this.userID)
-  addToPlaylist = addToPlaylist(this.cookie, this.userID)
-  getFullHomePage = getFullHomePage(this.cookie, this.userID)
-  search = search(this.cookie, this.userID)
+  getHomePage = getHomePage(this.cookie, this)
+  getPlaylist = getPlaylist(this.cookie, this)
+  addToPlaylist = addToPlaylist(this.cookie, this)
+  getFullHomePage = getFullHomePage(this.cookie, this)
+  search = search(this.cookie, this)
+  createPlaylist = createPlaylist(this.cookie, this)
 }
