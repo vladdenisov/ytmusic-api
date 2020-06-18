@@ -193,7 +193,7 @@ playlistName?: string
 					</div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/45886e2/lib/endpoints/Playlist.ts#L83">lib/endpoints/Playlist.ts:83</a></li>
+							<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/58cc03c/lib/endpoints/Playlist.ts#L83">lib/endpoints/Playlist.ts:83</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -203,6 +203,11 @@ playlistName?: string
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
 						<li class="tsd-signature tsd-kind-icon">create<wbr>Playlist<span class="tsd-signature-symbol">(</span>cookie<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">(Anonymous function)</span></li>
 					</ul>
+					<div class="tsd-comment">
+						<div class="lead">
+							<p>Create playlist</p>
+						</div>
+					</div>
 					<h4 class="tsd-parameters-title">Parameters</h4>
 					<ul class="tsd-parameters">
 						<li>
@@ -221,10 +226,20 @@ playlistName?: string
 						</li>
 					</ul>
 					<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">(Anonymous function)</span>    </h4>
+					<pre><code class="language-js">{
+<span class="hljs-attr">id</span>: string
+}</code></pre>
 					</ul>
+					<div class="tsd-comment">
+						<h4>usage</h4>
+						<p><pre><code class="language-js"> <span class="hljs-keyword">const</span> api = <span class="hljs-keyword">new</span> YTMUSIC(cookie)
+ <span class="hljs-keyword">const</span> data = <span class="hljs-keyword">await</span> api.createPlaylist(<span class="hljs-string">&#x27;Summer Songs&#x27;</span>, <span class="hljs-string">&#x27;PUBLIC&#x27;</span>, <span class="hljs-string">&#x27;Some songs for summer&#x27;</span>)
+ <span class="hljs-keyword">await</span> api.addToPlaylist([<span class="hljs-string">&#x27;-mLpe7KUg9U&#x27;</span>, <span class="hljs-string">&#x27;5hFevwJ4JXI&#x27;</span>], playlist.id)</code></pre>
+						</p>
+					</div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/45886e2/lib/endpoints/Playlist.ts#L116">lib/endpoints/Playlist.ts:116</a></li>
+							<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/58cc03c/lib/endpoints/Playlist.ts#L137">lib/endpoints/Playlist.ts:137</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -267,7 +282,7 @@ playlistName?: string
 					</div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/45886e2/lib/endpoints/Playlist.ts#L16">lib/endpoints/Playlist.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/58cc03c/lib/endpoints/Playlist.ts#L16">lib/endpoints/Playlist.ts:16</a></li>
 						</ul>
 					</aside>
 				</section>
