@@ -1,9 +1,23 @@
 import * as utils from '../utils'
+import Thumbnail from '../../models/Thumbnail'
 
 export const search = (cookie: string, args: any) => async (
   query: string,
   filter?: string
-) => {
+): Promise<
+  | Array<{
+      type: 'song' | 'album' | 'playlist' | 'video' | 'artist'
+      title: Text
+      url: string
+      tracksCount?: number
+      thumbnails: Thumbnail[]
+      author?: Text
+      id?: string
+      album?: Text
+      [propName: string]: any
+    }>
+  | Error
+> => {
   const body: any = utils.generateBody({ userID: args.userID })
   if (filter) {
     let param: string
@@ -30,8 +44,10 @@ export const search = (cookie: string, args: any) => async (
     authUser: args.authUser,
     body
   })
+  if (response.error) throw new Error(response.error.status)
   const contents = response.contents.sectionListRenderer.contents
   let results: any = []
+  if (contents[0].messageRenderer) return []
   contents.map((ctx: any) => {
     if (ctx.itemSectionRenderer) return
     ctx = ctx.musicShelfRenderer
@@ -42,8 +58,8 @@ export const search = (cookie: string, args: any) => async (
       else
         type = ctx.title.runs[0].text
           .toLowerCase()
-          .slice(0, ctx.title.runs[0].text.length)
-      if (type === 'top result') {
+          .slice(0, ctx.title.runs[0].text.length - 1)
+      if (type === 'top resul') {
         type = e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs[0].text.toLowerCase()
       }
       if (!['playlist', 'song', 'video', 'artist'].includes(type))
@@ -53,7 +69,8 @@ export const search = (cookie: string, args: any) => async (
         type,
         title:
           e.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text
-            .runs[0]
+            .runs[0],
+        thumbnails: e.thumbnail.musicThumbnailRenderer.thumbnail.thumbnails
       }
       type = type.toLowerCase()
       if (['playlist', 'song', 'video', 'album'].includes(type)) {
@@ -75,15 +92,23 @@ export const search = (cookie: string, args: any) => async (
         }
         if (type === 'playlist') {
           result.url = `https://music.youtube.com/playlist?list=${e.doubleTapCommand.watchPlaylistEndpoint.playlistId}`
-          result.tracks = parseInt(
+          result.tracksCount = parseInt(
             e.flexColumns[2].musicResponsiveListItemFlexColumnRenderer.text
               .runs[0].text
           )
           result.id = e.doubleTapCommand.watchPlaylistEndpoint.playlistId
         }
         if (type === 'album') {
+          result.url = `https://music.youtube.com/browse/${e.navigationEndpoint.browseEndpoint.browseId}`
+          result.playlistId =
+            e.doubleTapCommand.watchPlaylistEndpoint.playlistId
+          result.year =
+            e.flexColumns[2].musicResponsiveListItemFlexColumnRenderer.text.runs[0].text
         }
       } else {
+        result.subs =
+          e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs[0].text
+        result.url = `https://music.youtube.com/browse/${e.navigationEndpoint.browseEndpoint.browseId}`
       }
       results.push(result)
     })

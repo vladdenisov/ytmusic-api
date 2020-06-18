@@ -73,10 +73,10 @@ export const getPlaylist = (
  * @param playlistId -  ID of playlist
  * @returns ```js
  * {
-  status: string
-  playlistName?: string
-  ids: string[]
-  playlistId: string
+    status: string
+    playlistName?: string
+    ids: string[]
+    playlistId: string
 }
 ```
  */
@@ -98,7 +98,10 @@ export const addToPlaylist = (
   const body: any = utils.generateBody({ userID: args.userID })
   body.playlistId = playlistId
   if (args.userID) body.context.user.onBehalfOfUser = args.userID
-  body.actions = [{ action: 'ACTION_ADD_VIDEO', addedVideoId: ids[0] }]
+  body.actions = []
+  for (let id of ids) {
+    body.actions.push({ action: 'ACTION_ADD_VIDEO', addedVideoId: id })
+  }
   const response = await utils.sendRequest(cookie, {
     body,
     endpoint: 'browse/edit_playlist'
@@ -112,7 +115,25 @@ export const addToPlaylist = (
     playlistId
   }
 }
-
+/**
+ * Create playlist
+ *
+ * @usage
+ *
+ * ```js
+ *  const api = new YTMUSIC(cookie)
+ *  const data = await api.createPlaylist('Summer Songs', 'PUBLIC', 'Some songs for summer')
+ *  await api.addToPlaylist(['-mLpe7KUg9U', '5hFevwJ4JXI'], playlist.id)
+ * ```
+ * @param title - Title
+ * @param privacyStatus - Privacy Status of playlist
+ * @param description - Description of playlist
+ * @returns ```js
+ * {
+  id: string
+}
+```
+ */
 export const createPlaylist = (
   cookie: string,
   args: {
