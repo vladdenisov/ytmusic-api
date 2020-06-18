@@ -14,9 +14,12 @@ These instructions will get you a copy of the project up and running on your loc
 3. Google Account
 
 ### Installing
+#### Using npm 
+```sh
+  $ npm i ytmusic
+```
 
-~~npm install ytmusic-api~~
-
+#### Building it yourself
 Clone github repo
 ```sh 
   $ git clone https://github.com/vladdenisov/ytmusic-api 
@@ -43,7 +46,9 @@ Get the auth cookie from requests to YTMusic in your browser:
 #### Using in code
 Import lib to your code:
 ```js
-  const { YTMUSIC } = require('./dist/index.js')
+  const { YTMUSIC } = require('ytmusic')
+  // or if you build it yourself
+  const { YTMUSIC } = require('path/to/ytmusic/dist/index.js')
 ```
 Create new Instance of api with your cookie: 
 ```js
