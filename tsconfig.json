@@ -13,7 +13,7 @@
   "exclude": [
     "node_modules",
     "dist",
-    "cookie.json",
+    "*.json",
     "testing"
   ]
 }

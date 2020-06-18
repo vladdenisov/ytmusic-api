@@ -108,6 +108,7 @@ dist
 .vscode-test
 
 cookie.json
+node_modules
 
 .dist/
 .vscode/
@@ -119,4 +120,5 @@ cookie_example.json
 docs/
 .github/
 .prettierrc
+.prettierignore
 tsconfig.json
