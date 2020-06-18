@@ -1,5 +1,5 @@
 # Unofficial YouTube Music API 
-![GitHub last commit](https://img.shields.io/github/last-commit/vladdenisov/ytmusic-api) ![GitHub](https://img.shields.io/github/license/vladdenisov/ytmusic-api) ![GitHub repo size](https://img.shields.io/github/repo-size/vladdenisov/ytmusic-api) ![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/vladdenisov/ytmusic-api)
+![GitHub last commit](https://img.shields.io/github/last-commit/vladdenisov/ytmusic-api) ![GitHub](https://img.shields.io/github/license/vladdenisov/ytmusic-api) ![npm bundle size](https://img.shields.io/bundlephobia/min/ytmusic) ![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/vladdenisov/ytmusic-api)
 
 Simple API Project for NodeJS written in TypeScript inspired by [sigma67's python library](https://github.com/sigma67/ytmusicapi)
 
