@@ -15,9 +15,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Installing
 #### Using npm 
-```sh
-  $ npm i ytmusic
-```
+[![NPM](https://nodei.co/npm/ytmusic.png?compact=true)](https://nodei.co/npm/ytmusic/)
 
 #### Building it yourself
 Clone github repo
