@@ -80,13 +80,12 @@ export const getPlaylist = (
 }
 ```
  */
-export const addToPlaylist = (
+export const addToPlaylist = async (
   cookie: string,
   args: {
     userID?: string
     authUser?: number
-  }
-) => async (
+  },
   ids: string[],
   playlistId: string
 ): Promise<{
@@ -128,19 +127,13 @@ export const addToPlaylist = (
  * @param title - Title
  * @param privacyStatus - Privacy Status of playlist
  * @param description - Description of playlist
- * @returns ```js
- * {
-  id: string
-}
-```
  */
-export const createPlaylist = (
+export const createPlaylist = async (
   cookie: string,
   args: {
     userID?: string
     authUser?: number
-  }
-) => async (
+  },
   title: string,
   privacyStatus: 'PRIVATE' | 'PUBLIC' | 'UNLISTED',
   description?: string
@@ -164,5 +157,39 @@ export const createPlaylist = (
   if (response.error) throw new Error(response.error.status)
   return {
     id: response.playlistId
+  }
+}
+/**
+ * Delete playlist
+ *
+ * @usage
+ *
+ * ```js
+ *  const api = new YTMUSIC(cookie)
+ *  const data = await api.createPlaylist('Summer Songs', 'PUBLIC', 'Some songs for summer')
+ *  await api.deletePlaylist(playlist.id)
+ * ```
+ * @param id - id of the playlist
+ */
+export const deletePlaylist = async (
+  cookie: string,
+  args: {
+    userID?: string
+    authUser?: number
+  },
+  id: string
+): Promise<{ id: string } | Error> => {
+  const body: any = utils.generateBody({
+    userID: args.userID
+  })
+  body.playlistId = id
+  const response = await utils.sendRequest(cookie, {
+    body,
+    authUser: args.authUser,
+    endpoint: 'playlist/delete'
+  })
+  if (response.error) throw new Error(response.error.status)
+  return {
+    id
   }
 }

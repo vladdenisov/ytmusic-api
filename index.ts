@@ -1,9 +1,5 @@
 import * as HomePage from './lib/endpoints/HomePage'
-import {
-  getPlaylist,
-  addToPlaylist,
-  createPlaylist
-} from './lib/endpoints/Playlist'
+import * as Playlist from './lib/endpoints/Playlist'
 import { search } from './lib/endpoints/Search'
 export class YTMUSIC {
   userID: string
@@ -33,9 +29,9 @@ export class YTMUSIC {
   getHomePage = async () => {
     return await HomePage.getHomePage(this.cookie, this)
   }
-  getPlaylist = getPlaylist(this.cookie, this)
+  getPlaylist = Playlist.getPlaylist(this.cookie, this)
   addToPlaylist = async (ids: string[], playlistId: string) =>
-    await addToPlaylist(this.cookie, this, ids, playlistId)
+    await Playlist.addToPlaylist(this.cookie, this, ids, playlistId)
   /**
    * Returns Full HomePage
    *
@@ -93,5 +89,25 @@ export class YTMUSIC {
     privacyStatus: 'PRIVATE' | 'PUBLIC' | 'UNLISTED',
     description?: string
   ) =>
-    await createPlaylist(this.cookie, this, title, privacyStatus, description)
+    await Playlist.createPlaylist(
+      this.cookie,
+      this,
+      title,
+      privacyStatus,
+      description
+    )
+  /**
+   * Delete playlist
+   *
+   * @usage
+   *
+   * ```js
+   *  const api = new YTMUSIC(cookie)
+   *  const data = await api.createPlaylist('Summer Songs', 'PUBLIC', 'Some songs for summer')
+   *  await api.deletePlaylist(playlist.id)
+   * ```
+   * @param id - id of the playlist
+   */
+  deletePlaylist = async (id: string) =>
+    await Playlist.deletePlaylist(this.cookie, this, id)
 }
