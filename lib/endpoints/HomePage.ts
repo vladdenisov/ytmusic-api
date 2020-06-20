@@ -18,13 +18,13 @@ import * as utils from '../utils'
  * @returns {@link HomePage}
  *
  */
-export const getHomePage = (
+export const getHomePage = async (
   cookie: string,
   args: {
     userID?: string
     authUser?: number
   }
-) => async (): Promise<HomePage> => {
+): Promise<HomePage> => {
   const response = await utils.sendRequest(cookie, {
     id: 'FEmusic_home',
     endpoint: 'browse',
@@ -193,14 +193,14 @@ const getHomePageC = (
  * @returns {@link HomePage}
  *
  */
-export const getFullHomePage = (
+export const getFullHomePage = async (
   cookie: string,
   args: {
     userID?: string
     authUser?: number
   }
-) => async () => {
-  const home = await getHomePage(cookie, args)()
+) => {
+  const home = await getHomePage(cookie, args)
   while (true) {
     const t = await home.continue()
     home.content?.push(...t.content)

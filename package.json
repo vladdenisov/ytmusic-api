@@ -13,7 +13,7 @@
     "test": "echo \"Error: no test specified\"",
     "lint": "prettier \"{,!(node_modules)/**/}*.{ts,js}\" --write",
     "build": "tsc",
-    "docs": "typedoc --out docs --theme node_modules/eledoc/bin/default/ && touch docs/.nojekyll"
+    "docs": "typedoc --out docs && touch docs/.nojekyll"
   },
   "author": "Vlad Denisov",
   "license": "MIT",
