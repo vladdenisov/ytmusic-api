@@ -72,7 +72,7 @@ export const search = async (
     if (ctx.itemSectionRenderer) return
     ctx = ctx.musicShelfRenderer
     ctx.contents.map((e: any, i: number) => {
-      if (options.max && i > options.max) return
+      if (options.max && i > options.max - 1) return
       try {
         e = e.musicResponsiveListItemRenderer
         let type: string

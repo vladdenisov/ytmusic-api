@@ -103,6 +103,7 @@ export const addToPlaylist = async (
   }
   const response = await utils.sendRequest(cookie, {
     body,
+    authUser: args.authUser,
     endpoint: 'browse/edit_playlist'
   })
   return {
