@@ -8,6 +8,7 @@ export interface Song {
   readonly author: Text[]
   readonly album: Text
   readonly url: string
+  readonly id: string
 }
 interface Text {
   text: string

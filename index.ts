@@ -29,7 +29,8 @@ export class YTMUSIC {
   getHomePage = async () => {
     return await HomePage.getHomePage(this.cookie, this)
   }
-  getPlaylist = Playlist.getPlaylist(this.cookie, this)
+  getPlaylist = async (id: string, limit?: number) =>
+    await Playlist.getPlaylist(this.cookie, this, id, limit)
   addToPlaylist = async (ids: string[], playlistId: string) =>
     await Playlist.addToPlaylist(this.cookie, this, ids, playlistId)
   /**
@@ -110,4 +111,29 @@ export class YTMUSIC {
    */
   deletePlaylist = async (id: string) =>
     await Playlist.deletePlaylist(this.cookie, this, id)
+  /**
+ * Remove song(s) from playlist
+ *
+ * @usage
+ *
+ * ```js
+ *  const api = new YTMUSIC(cookie)
+ *  const data = await api.removeFromPlaylist(['-mLpe7KUg9U', '5hFevwJ4JXI'], 'RDAMVM5hFevwJ4JXI')
+ * ```
+ * @param ids - Array of song ids to remove
+ * @param playlistId -  ID of playlist
+```
+ */
+  removeFromPlaylist = async (
+    ids: string[],
+    playlistId: string,
+    setVideoId?: string
+  ) =>
+    await Playlist.removeFromPlaylist(
+      this.cookie,
+      this,
+      ids,
+      playlistId,
+      setVideoId
+    )
 }

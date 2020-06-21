@@ -13,13 +13,15 @@ import * as utils from '../utils'
  * @returns {@link Playlist}
  *
  */
-export const getPlaylist = (
+export const getPlaylist = async (
   cookie: string,
   args: {
     userID?: string
     authUser?: number
-  }
-) => async (id: string): Promise<Playlist> => {
+  },
+  id: string,
+  limit?: number
+): Promise<Playlist> => {
   const response = await utils.sendRequest(cookie, {
     id: `VL${id}`,
     type: 'PLAYLIST',
@@ -42,9 +44,18 @@ export const getPlaylist = (
     subtitle: header.subtitle.runs,
     secondSubtitle: header.secondSubtitle.runs
   }
-  data.contents.map((e: any) => {
+  if (!data.contents) return playlist
+  data.contents.map((e: any, i: number) => {
     e = e.musicResponsiveListItemRenderer
+    if (i === 0) {
+      if (e.playlistItemData)
+        playlist.setVideoId = e.playlistItemData.playlistSetVideoId
+    }
+    if (limit && i > limit - 1) return
     playlist.content.push({
+      id:
+        e.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0]
+          .navigationEndpoint.watchEndpoint.videoId,
       duration:
         e.fixedColumns[0].musicResponsiveListItemFixedColumnRenderer.text
           .runs[0].text,
@@ -94,6 +105,7 @@ export const addToPlaylist = async (
   ids: string[]
   playlistId: string
 }> => {
+  if (!playlistId) throw new Error('You must specify playlist id')
   const body: any = utils.generateBody({ userID: args.userID })
   body.playlistId = playlistId
   if (args.userID) body.context.user.onBehalfOfUser = args.userID
@@ -180,6 +192,7 @@ export const deletePlaylist = async (
   },
   id: string
 ): Promise<{ id: string } | Error> => {
+  if (!id) throw new Error('You must specify playlist id')
   const body: any = utils.generateBody({
     userID: args.userID
   })
@@ -192,5 +205,70 @@ export const deletePlaylist = async (
   if (response.error) throw new Error(response.error.status)
   return {
     id
+  }
+}
+
+/**
+ * Remove song(s) from playlist
+ *
+ * @usage
+ *
+ * ```js
+ *  const api = new YTMUSIC(cookie)
+ *  const data = await api.removeFromPlaylist(['-mLpe7KUg9U', '5hFevwJ4JXI'], 'RDAMVM5hFevwJ4JXI')
+ * ```
+ * @param ids - Array of song ids to remove
+ * @param playlistId -  ID of playlist
+```
+ */
+export const removeFromPlaylist = async (
+  cookie: string,
+  args: {
+    userID?: string
+    authUser?: number
+  },
+  ids: string[],
+  playlistId: string,
+  setVideoId?: string
+): Promise<
+  | {
+      status: string
+      playlistName?: string
+      ids: string[]
+      playlistId: string
+    }
+  | Error
+> => {
+  if (!playlistId) {
+    throw new Error('You must specify playlist id')
+  }
+  if (!setVideoId) {
+    const pl = await getPlaylist(cookie, args, playlistId, 1)
+    if (!pl.setVideoId) throw new Error("You don't own this playlist")
+    setVideoId = pl.setVideoId
+  }
+  const body: any = utils.generateBody({ userID: args.userID })
+  body.playlistId = playlistId
+  if (args.userID) body.context.user.onBehalfOfUser = args.userID
+  body.actions = []
+  for (let id of ids) {
+    body.actions.push({
+      action: 'ACTION_REMOVE_VIDEO',
+      removedVideoId: id,
+      setVideoId: setVideoId
+    })
+  }
+  const response = await utils.sendRequest(cookie, {
+    body,
+    authUser: args.authUser,
+    endpoint: 'browse/edit_playlist'
+  })
+  return {
+    status: response.status,
+    playlistName:
+      response.actions[0].openPopupAction.popup.notificationActionRenderer
+        .responseText.runs[1].text,
+    ids,
+    playlistId
   }
 }

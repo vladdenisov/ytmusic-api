@@ -9,4 +9,5 @@ export default interface Playlist {
   secondSubtitle?: Subtitle[]
   playlistId: string
   content: Song[]
+  setVideoId?: string
 }
