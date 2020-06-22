@@ -1,5 +1,6 @@
 import * as HomePage from './lib/endpoints/HomePage'
 import * as Playlist from './lib/endpoints/Playlist'
+import * as Browsing from './lib/endpoints/Browsing'
 import { search } from './lib/endpoints/Search'
 export class YTMUSIC {
   userID: string
@@ -136,4 +137,6 @@ export class YTMUSIC {
       playlistId,
       setVideoId
     )
+  getArtist = async (channelId: string) =>
+    Browsing.getArtist(this.cookie, this, channelId)
 }
