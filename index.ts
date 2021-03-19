@@ -3,15 +3,19 @@ import * as Playlist from './lib/endpoints/Playlist'
 import * as Browsing from './lib/endpoints/Browsing'
 import { search } from './lib/endpoints/Search'
 export class YTMUSIC {
-  userID: string
+  userID?: string
   authUser: number | undefined
   constructor(
     private cookie: string,
     private args: { userID: string; authUser?: number }
   ) {
     this.cookie = cookie
-    this.userID = args.userID
-    this.authUser = args.authUser
+    if (args?.userID) {
+      this.userID = args.userID
+    }
+    if (args?.authUser) {
+      this.authUser = args.authUser
+    }
   }
   /**
    * Returns First Part of HomePage
