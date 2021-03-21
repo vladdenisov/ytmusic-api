@@ -4,6 +4,8 @@ import cookie from 'cookie'
  */
 const sha1 = require('sha1')
 import fetch from 'node-fetch'
+import contextJSON from './context.json'
+import headersJSON from './headers.json'
 /**
  * @ignore
  */
@@ -28,57 +30,7 @@ export const generateBody = (args: {
   type?: string
   userID?: string
 }): string | object => {
-  const context: any = {
-    client: {
-      clientName: 'WEB_REMIX',
-      clientVersion: '0.1',
-      hl: 'en',
-      experimentIds: [],
-      experimentsToken: '',
-      browserName: 'Edge Chromium',
-      browserVersion: '84.0.522.15',
-      osName: 'Windows',
-      osVersion: '10.0',
-      utcOffsetMinutes: 180,
-      locationInfo: {
-        locationPermissionAuthorizationStatus:
-          'LOCATION_PERMISSION_AUTHORIZATION_STATUS_UNSUPPORTED'
-      },
-      musicAppInfo: {
-        musicActivityMasterSwitch: 'MUSIC_ACTIVITY_MASTER_SWITCH_INDETERMINATE',
-        musicLocationMasterSwitch: 'MUSIC_LOCATION_MASTER_SWITCH_INDETERMINATE',
-        pwaInstallabilityStatus: 'PWA_INSTALLABILITY_STATUS_UNKNOWN'
-      }
-    },
-    capabilities: {},
-    request: {
-      internalExperimentFlags: [
-        {
-          key: 'force_music_enable_outertube_playlist_detail_browse',
-          value: 'true'
-        },
-        {
-          key: 'force_music_enable_outertube_tastebuilder_browse',
-          value: 'true'
-        },
-        {
-          key: 'force_music_enable_outertube_album_detail_browse',
-          value: 'true'
-        },
-        { key: 'force_music_enable_outertube_music_queue', value: 'true' },
-        {
-          key: 'force_music_enable_outertube_search_suggestions',
-          value: 'true'
-        }
-      ],
-      sessionIndex: 0
-    },
-    user: { enableSafetyMode: false },
-    clickTracking: {
-      clickTrackingParams: 'IhMI5aKttYiE6gIVhEGbCh0o9w8rMghleHRlcm5hbA=='
-    },
-    activePlayers: {}
-  }
+  const context: any = contextJSON.context
   if (args.userID) context.user.onBehalfOfUser = args.userID
   if (args.type)
     return JSON.stringify({
@@ -104,16 +56,11 @@ export const generateHeaders = (cookie: string, authUser?: number): object => {
   const token = getAuthToken(cookie)
   if (!authUser) authUser = 0
   return {
-    'User-Agent':
-      'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0',
-    Accept: '*/*',
-    'Accept-Language': 'en-US,en;q=0.5',
+    ...headersJSON,
     Authorization: token,
-    'Content-Type': 'application/json',
     'X-Goog-AuthUser': `${authUser}`,
-    'x-origin': 'https://music.youtube.com',
-    'X-Goog-Visitor-Id': 'CgtvVTcxa1EtbV9hayiMu-P0BQ%3D%3D',
-    Cookie: cookie
+    Cookie: cookie,
+    'x-youtube-client-version': '0.1'
   }
 }
 /**
@@ -133,7 +80,11 @@ export const sendRequest = async (
   }
 ) => {
   const headers: object = generateHeaders(c, args.authUser)
-  const options: object = {
+  const options: {
+    method: string,
+    headers: any,
+    body: any
+  } = {
     method: 'POST',
     headers: headers,
     body: args.body
@@ -154,5 +105,7 @@ export const sendRequest = async (
   return fetch(
     `https://music.youtube.com/youtubei/v1/${args.endpoint}?${addParams}alt=json&key=AIzaSyC9XL3ZjWddXya6X74dJoCTL-WEYFDNX30`,
     options
-  ).then((data) => data.json())
+  ).then((data) => data.json()).then((data) => {
+    return data
+  })
 }

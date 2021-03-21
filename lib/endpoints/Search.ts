@@ -20,7 +20,7 @@ export const search = async (
   cookie: string,
   args: any,
   query: string,
-  options: {
+  options?: {
     filter?: string
     max?: number
   }
@@ -39,7 +39,7 @@ export const search = async (
   | Error
 > => {
   const body: any = utils.generateBody({ userID: args.userID })
-  if (options.filter) {
+  if (options?.filter) {
     let param: string
     switch (options.filter) {
       case 'songs':
@@ -72,11 +72,11 @@ export const search = async (
     if (ctx.itemSectionRenderer) return
     ctx = ctx.musicShelfRenderer
     ctx.contents.map((e: any, i: number) => {
-      if (options.max && i > options.max - 1) return
+      if (options?.max && i > options?.max - 1) return
       try {
         e = e.musicResponsiveListItemRenderer
         let type: string
-        if (options.filter)
+        if (options?.filter)
           type = options.filter.slice(0, options.filter.length - 1)
         else
           type = ctx.title.runs[0].text
@@ -87,7 +87,7 @@ export const search = async (
         }
         if (!['playlist', 'song', 'video', 'artist'].includes(type))
           type = 'album'
-        if (!options.filter) e.flexColumns.splice(1, 1)
+        // if (!options.filter) e.flexColumns.splice(1, 1)
         let result: any = {
           type,
           title:
@@ -98,35 +98,36 @@ export const search = async (
         type = type.toLowerCase()
         if (['playlist', 'song', 'video', 'album'].includes(type)) {
           result.author =
-            e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs[0]
+            e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs[2].text
           if (type === 'song') {
-            result.url = `https://music.youtube.com/watch?v=${e.doubleTapCommand.watchEndpoint.videoId}&list=${e.doubleTapCommand.watchEndpoint.playlistId}`
+            result.url = `https://music.youtube.com/watch?v=${e.playlistItemData.videoId}&list=${e.overlay.musicItemThumbnailOverlayRenderer.content.musicPlayButtonRenderer.playNavigationEndpoint.watchEndpoint.playlistId}`
             result.album =
-              e.flexColumns[2].musicResponsiveListItemFlexColumnRenderer.text.runs[0]
+              e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs[4].text
+            result.album_browse_id = e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs[4].navigationEndpoint.browseEndpoint.browseId
             result.duration =
-              e.flexColumns[3].musicResponsiveListItemFlexColumnRenderer.text.runs[0].text
-            result.id = e.doubleTapCommand.watchEndpoint.videoId
+              e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs[6].text
+            result.id = e.playlistItemData.videoId
           }
           if (type === 'video') {
-            result.url = `https://music.youtube.com/watch?v=${e.doubleTapCommand.watchEndpoint.videoId}&list=${e.doubleTapCommand.watchEndpoint.playlistId}`
+            result.url = `https://music.youtube.com/watch?v=${e.playlistItemData.videoId}&list=${e.overlay.musicItemThumbnailOverlayRenderer.content.musicPlayButtonRenderer.playNavigationEndpoint.watchEndpoint.playlistId}`
             result.views =
-              e.flexColumns[2].musicResponsiveListItemFlexColumnRenderer.text.runs[0]
-            result.id = e.doubleTapCommand.watchEndpoint.videoId
+              e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs[4].text
+            result.duration =
+              e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs[6].text
+            result.id = e.playlistItemData.videoId
           }
           if (type === 'playlist') {
-            result.url = `https://music.youtube.com/playlist?list=${e.doubleTapCommand.watchPlaylistEndpoint.playlistId}`
+            result.url = `https://music.youtube.com/playlist?list=${e.navigationEndpoint.browseEndpoint.browseId}`
             result.tracksCount = parseInt(
-              e.flexColumns[2].musicResponsiveListItemFlexColumnRenderer.text
-                .runs[0].text
+              e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text
+                .runs[4].text
             )
-            result.id = e.doubleTapCommand.watchPlaylistEndpoint.playlistId
+            result.id = e.navigationEndpoint.browseEndpoint.browseId
           }
           if (type === 'album') {
             result.url = `https://music.youtube.com/browse/${e.navigationEndpoint.browseEndpoint.browseId}`
-            result.playlistId =
-              e.doubleTapCommand.watchPlaylistEndpoint.playlistId
             result.year =
-              e.flexColumns[2].musicResponsiveListItemFlexColumnRenderer.text.runs[0].text
+              e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs[4].text
           }
         } else {
           result.subs =
@@ -135,6 +136,7 @@ export const search = async (
         }
         results.push(result)
       } catch (e) {
+        console.log(e)
         return
       }
     })
