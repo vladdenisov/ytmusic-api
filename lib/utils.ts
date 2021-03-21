@@ -81,8 +81,8 @@ export const sendRequest = async (
 ) => {
   const headers: object = generateHeaders(c, args.authUser)
   const options: {
-    method: string,
-    headers: any,
+    method: string
+    headers: any
     body: any
   } = {
     method: 'POST',
@@ -105,7 +105,9 @@ export const sendRequest = async (
   return fetch(
     `https://music.youtube.com/youtubei/v1/${args.endpoint}?${addParams}alt=json&key=AIzaSyC9XL3ZjWddXya6X74dJoCTL-WEYFDNX30`,
     options
-  ).then((data) => data.json()).then((data) => {
-    return data
-  })
+  )
+    .then((data) => data.json())
+    .then((data) => {
+      return data
+    })
 }
