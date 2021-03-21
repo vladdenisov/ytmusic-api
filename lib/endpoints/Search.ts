@@ -103,7 +103,8 @@ export const search = async (
             result.url = `https://music.youtube.com/watch?v=${e.playlistItemData.videoId}&list=${e.overlay.musicItemThumbnailOverlayRenderer.content.musicPlayButtonRenderer.playNavigationEndpoint.watchEndpoint.playlistId}`
             result.album =
               e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs[4].text
-            result.album_browse_id = e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs[4].navigationEndpoint.browseEndpoint.browseId
+            result.album_browse_id =
+              e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs[4].navigationEndpoint.browseEndpoint.browseId
             result.duration =
               e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs[6].text
             result.id = e.playlistItemData.videoId
