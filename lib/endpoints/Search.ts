@@ -85,18 +85,18 @@ export const search = async (
         if (type === 'top resul') {
           type = e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs[0].text.toLowerCase()
         }
-        if (!['playlist', 'song', 'video', 'artist'].includes(type))
+        if (!['user playlist', 'song', 'video', 'artist'].includes(type))
           type = 'album'
         // if (!options.filter) e.flexColumns.splice(1, 1)
         let result: any = {
           type,
           title:
             e.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text
-              .runs[0],
+              .runs[0].text,
           thumbnails: e.thumbnail.musicThumbnailRenderer.thumbnail.thumbnails
         }
         type = type.toLowerCase()
-        if (['playlist', 'song', 'video', 'album'].includes(type)) {
+        if (['user playlist', 'song', 'video', 'album'].includes(type)) {
           result.author =
             e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs[2].text
           if (type === 'song') {
@@ -107,6 +107,7 @@ export const search = async (
             result.duration =
               e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs[6].text
             result.id = e.playlistItemData.videoId
+            result.artist_browse_id = e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs[2].navigationEndpoint.browseEndpoint.browseId;
           }
           if (type === 'video') {
             result.url = `https://music.youtube.com/watch?v=${e.playlistItemData.videoId}&list=${e.overlay.musicItemThumbnailOverlayRenderer.content.musicPlayButtonRenderer.playNavigationEndpoint.watchEndpoint.playlistId}`
@@ -116,13 +117,14 @@ export const search = async (
               e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs[6].text
             result.id = e.playlistItemData.videoId
           }
-          if (type === 'playlist') {
+          if (type === 'user playlist') {
+            result.type = 'playlist'
             result.url = `https://music.youtube.com/playlist?list=${e.navigationEndpoint.browseEndpoint.browseId}`
             result.tracksCount = parseInt(
               e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text
                 .runs[4].text
             )
-            result.id = e.navigationEndpoint.browseEndpoint.browseId
+            result.id = e.navigationEndpoint.browseEndpoint.browseId.slice(2)
           }
           if (type === 'album') {
             result.url = `https://music.youtube.com/browse/${e.navigationEndpoint.browseEndpoint.browseId}`

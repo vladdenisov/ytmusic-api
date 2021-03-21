@@ -22,7 +22,6 @@ export const getArtist = async (
   const data =
     result.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer
       .content.sectionListRenderer.contents
-  console.log(result)
   let songs: { browseId?: string; results: Song[] } = { results: [] }
   let albums: { browseId?: string; results: Album[] } = { results: [] }
   if (data[0].musicShelfRenderer.contents) {
