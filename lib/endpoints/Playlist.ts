@@ -53,9 +53,8 @@ export const getPlaylist = async (
     }
     if (limit && i > limit - 1) return
     playlist.content.push({
-      id:
-        e.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0]
-          .navigationEndpoint.watchEndpoint.videoId,
+      id: e.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text
+        .runs[0].navigationEndpoint.watchEndpoint.videoId,
       duration:
         e.fixedColumns[0].musicResponsiveListItemFixedColumnRenderer.text
           .runs[0].text,
