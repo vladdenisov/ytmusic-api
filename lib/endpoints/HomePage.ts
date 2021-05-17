@@ -23,20 +23,20 @@ function parseTwoRowItemRenderer(e: any) {
     }
     item.subtitle.push(sub)
   })
-  return item;
+  return item
 }
 
 function parseCarouselItem(e: any) {
   if (e.musicTwoRowItemRenderer) {
-    return parseTwoRowItemRenderer(e.musicTwoRowItemRenderer);
+    return parseTwoRowItemRenderer(e.musicTwoRowItemRenderer)
   }
 
   if (e.musicResponsiveListItemRenderer) {
     // TODO
-    return;
+    return
   }
 
-  throw new Error(`Unexpected carousel contents: ${JSON.stringify(e)}`);
+  throw new Error(`Unexpected carousel contents: ${JSON.stringify(e)}`)
 }
 
 function parseCarouselContents(contents: any): Carousel[] {
@@ -45,16 +45,19 @@ function parseCarouselContents(contents: any): Carousel[] {
     const ctx = carousel.musicCarouselShelfRenderer
       ? carousel.musicCarouselShelfRenderer
       : carousel.musicImmersiveCarouselShelfRenderer
-    const content: CarouselItem[] = utils.filterMap(ctx.contents, parseCarouselItem);
+    const content: CarouselItem[] = utils.filterMap(
+      ctx.contents,
+      parseCarouselItem
+    )
     return {
-      title: ctx.header.musicCarouselShelfBasicHeaderRenderer.title.runs[0].text,
+      title:
+        ctx.header.musicCarouselShelfBasicHeaderRenderer.title.runs[0].text,
       content,
       strapline: ctx.header.musicCarouselShelfBasicHeaderRenderer.strapline
         ? ctx.header.musicCarouselShelfBasicHeaderRenderer.strapline.runs
         : undefined
     }
   })
-
 }
 
 /**
@@ -89,7 +92,7 @@ export const getHomePage = async (
     response.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer
   const contents = data.content.sectionListRenderer.contents
 
-  const content: Carousel[] = parseCarouselContents(contents);
+  const content: Carousel[] = parseCarouselContents(contents)
 
   const home: HomePage = {
     title: data.title,
@@ -124,45 +127,47 @@ export const getHomePage = async (
  * @returns {@link HomePage}
  *
  */
-const getHomePageC = (
-  cookie: string,
-  cToken: string,
-  itct: string,
-  args: {
-    userID?: string
-    authUser?: number
-  }
-) => async (): Promise<HomePage> => {
-  const body: any = utils.generateBody({ userID: args.userID })
-  const response = await utils.sendRequest(cookie, {
-    endpoint: 'browse',
-    body,
-    cToken,
-    itct,
-    authUser: args.authUser
-  })
-  const data = response.continuationContents.sectionListContinuation
-  const content: Carousel[] = parseCarouselContents(data.contents);
-  const home: HomePage = {
-    title:
-      response.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer
-        .title,
-    content,
-    browseId:
-      response.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer
-        .tabIdentifier
-  }
-  if (data.continuations) {
-    home.continue = getHomePageC(
-      cookie,
-      data.continuations[0].nextContinuationData.continuation,
-      data.continuations[0].nextContinuationData.clickTrackingParams,
-      args
-    )
-  }
+const getHomePageC =
+  (
+    cookie: string,
+    cToken: string,
+    itct: string,
+    args: {
+      userID?: string
+      authUser?: number
+    }
+  ) =>
+  async (): Promise<HomePage> => {
+    const body: any = utils.generateBody({ userID: args.userID })
+    const response = await utils.sendRequest(cookie, {
+      endpoint: 'browse',
+      body,
+      cToken,
+      itct,
+      authUser: args.authUser
+    })
+    const data = response.continuationContents.sectionListContinuation
+    const content: Carousel[] = parseCarouselContents(data.contents)
+    const home: HomePage = {
+      title:
+        response.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer
+          .title,
+      content,
+      browseId:
+        response.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer
+          .tabIdentifier
+    }
+    if (data.continuations) {
+      home.continue = getHomePageC(
+        cookie,
+        data.continuations[0].nextContinuationData.continuation,
+        data.continuations[0].nextContinuationData.clickTrackingParams,
+        args
+      )
+    }
 
-  return home
-}
+    return home
+  }
 
 /**
  * Returns Full HomePage

@@ -40,9 +40,8 @@ export const getArtist = async (
         album:
           e.flexColumns[2].musicResponsiveListItemFlexColumnRenderer.text
             .runs[0],
-        id:
-          e.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text
-            .runs[0].navigationEndpoint.watchEndpoint.videoId,
+        id: e.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text
+          .runs[0].navigationEndpoint.watchEndpoint.videoId,
         url: `https://music.youtube.com/watch?v=${e.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0].navigationEndpoint.watchEndpoint.videoId}`
       })
     })

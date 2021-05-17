@@ -83,7 +83,8 @@ export const search = async (
             .toLowerCase()
             .slice(0, ctx.title.runs[0].text.length - 1)
         if (type === 'top resul') {
-          type = e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs[0].text.toLowerCase()
+          type =
+            e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs[0].text.toLowerCase()
         }
         if (!['user playlist', 'song', 'video', 'artist'].includes(type))
           type = 'album'
