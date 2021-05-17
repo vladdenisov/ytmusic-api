@@ -4,7 +4,7 @@ import CarouselItem from '../../models/CarouselItem'
 import Subtitle from '../../models/Subtitle'
 import * as utils from '../utils'
 
-function parseTwoRowItemRenderer(e: any) {
+const parseTwoRowItemRenderer = utils.parser<any, CarouselItem>((e: any) => {
   const item: CarouselItem = {
     thumbnail: [],
     title: e.title.runs[0],
@@ -24,30 +24,54 @@ function parseTwoRowItemRenderer(e: any) {
     item.subtitle.push(sub)
   })
   return item
+})
+
+const parseFlexColumnRenderer = utils.parser<any, CarouselItem>((item: any) => {
+  return {
+    thumbnail: [],
+    title: item.text.runs[0].text,
+    subtitle: [],
+    navigationEndpoint: item.text.runs[0].navigationEndpoint
+  }
+})
+
+function parseResponsiveListItemRenderer(e: any): CarouselItem[] | undefined {
+  if (e.flexColumns) {
+    return utils.filterMap(e.flexColumns, (item: any) => {
+      if (item.musicResponsiveListItemFlexColumnRenderer) {
+        return parseFlexColumnRenderer(
+          item.musicResponsiveListItemFlexColumnRenderer
+        )
+      }
+
+      throw new Error(`Unexpected flexColumn content: ${JSON.stringify(item)}`)
+    })
+  }
+
+  throw new Error(`Unexpected responsive contents: ${JSON.stringify(e)}`)
 }
 
-function parseCarouselItem(e: any) {
+function parseCarouselItems(e: any) {
   if (e.musicTwoRowItemRenderer) {
-    return parseTwoRowItemRenderer(e.musicTwoRowItemRenderer)
+    return [parseTwoRowItemRenderer(e.musicTwoRowItemRenderer)]
   }
 
   if (e.musicResponsiveListItemRenderer) {
-    // TODO
-    return
+    return parseResponsiveListItemRenderer(e.musicResponsiveListItemRenderer)
   }
 
   throw new Error(`Unexpected carousel contents: ${JSON.stringify(e)}`)
 }
 
-function parseCarouselContents(contents: any): Carousel[] {
-  return utils.filterMap(contents, (carousel: any) => {
+const parseCarouselContents = (contents: any): Carousel[] =>
+  utils.filterMap(contents, (carousel: any) => {
     if (carousel.musicTastebuilderShelfRenderer) return
     const ctx = carousel.musicCarouselShelfRenderer
       ? carousel.musicCarouselShelfRenderer
       : carousel.musicImmersiveCarouselShelfRenderer
-    const content: CarouselItem[] = utils.filterMap(
+    const content: CarouselItem[] = utils.filterFlatMap(
       ctx.contents,
-      parseCarouselItem
+      parseCarouselItems
     )
     return {
       title:
@@ -58,7 +82,6 @@ function parseCarouselContents(contents: any): Carousel[] {
         : undefined
     }
   })
-}
 
 /**
  * Returns First Part of HomePage

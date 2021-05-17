@@ -125,3 +125,38 @@ export function filterMap<T, R>(
   }
   return result
 }
+
+export function filterFlatMap<T, R>(
+  collection: T[],
+  f: (item: T) => R[] | undefined | null
+): R[] {
+  const result: R[] = []
+  for (const item of collection) {
+    const mapped = f(item)
+    if (mapped != null) {
+      result.push(...mapped)
+    }
+  }
+  return result
+}
+
+/**
+ * Wraps a function that accepts input T and parses it into output R.
+ * In the normal case, this is a no-op; if the function throws, however,
+ * we will augment the thrown Error with context bout what was being parsed.
+ */
+export function parser<T, R>(f: (input: T) => R): (input: T) => R {
+  return function parserWrapper(input: T) {
+    try {
+      return f(input)
+    } catch (e) {
+      throw new Error(
+        `Unexpected error: ${e.message}\nParsing: ${JSON.stringify(
+          input,
+          null,
+          2
+        )}`
+      )
+    }
+  }
+}
