@@ -111,3 +111,17 @@ export const sendRequest = async (
       return data
     })
 }
+
+export function filterMap<T, R>(
+    collection: T[],
+    f: (item: T) => R | undefined | null,
+): R[] {
+    const result: R[] = [];
+    for (const item of collection) {
+        const mapped = f(item);
+        if (mapped != null) {
+            result.push(mapped);
+        }
+    }
+    return result;
+}

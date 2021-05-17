@@ -20,6 +20,7 @@
     "test": "echo \"Error: no test specified\"",
     "lint": "prettier \"{,!(node_modules)/**/}*.{ts,js}\" --write",
     "build": "tsc",
+    "watch": "tsc --watch",
     "docs": "typedoc --out docs && touch docs/.nojekyll"
   },
   "author": "Vlad Denisov",
