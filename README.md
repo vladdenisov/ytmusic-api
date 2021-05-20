@@ -79,6 +79,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 ## Authors
 
 * **Vlad Denisov** - *Initial work* - [vladdenisov](https://github.com/vladdenisov)
+* **Daniel Leong** - [dhleong](https://github.com/vladdenisov)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
