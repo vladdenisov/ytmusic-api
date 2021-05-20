@@ -19,23 +19,31 @@ const parsePlaylist = utils.parser((response: any, playlistId: string) => {
   return playlist
 })
 
-const parseSong = utils.parser((e: any, id: string) => {
+const parseSong = utils.parser((e: any, playlistId: string) => {
+  const primaryTextRun = e.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0]
+  const id = primaryTextRun?.navigationEndpoint?.watchEndpoint?.videoId;
+  if (!id) {
+    // NOTE: It is apparently possible to have items that don't have an ID!
+    // The Web UI renders them as disabled, and the only available action is to
+    // remove them from the playlist. For now, we will wimply omit them from
+    // results, since having an optional ID would be quite a breaking change
+    return
+  }
+
   return {
-      id: e.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text
-        .runs[0].navigationEndpoint.watchEndpoint.videoId,
+      id,
       duration:
         e.fixedColumns[0].musicResponsiveListItemFixedColumnRenderer.text
           .runs[0].text,
       thumbnail: e.thumbnail.musicThumbnailRenderer.thumbnail.thumbnails,
-      title:
-        e.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0],
+      title: primaryTextRun,
       author:
         e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs,
       album:
-        e.flexColumns[2].musicResponsiveListItemFlexColumnRenderer.text.runs[0],
-      url: `https://music.youtube.com/watch?v=${e.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0].navigationEndpoint.watchEndpoint.videoId}&list=${id}`
+        e.flexColumns[2].musicResponsiveListItemFlexColumnRenderer.text.runs?.[0],
+      url: `https://music.youtube.com/watch?v=${id}&list=${playlistId}`
     } as Song
-});
+})
 
 /**
  * Returns Playlist Info
@@ -73,15 +81,19 @@ export const getPlaylist = async (
       .content.sectionListRenderer.contents[0].musicPlaylistShelfRenderer
   if (!data.contents) return playlist
 
-  data.contents.map((e: any, i: number) => {
-    e = e.musicResponsiveListItemRenderer
+  for (let i=0; i < data.contents.length; ++i) {
+    const e = data.contents[i].musicResponsiveListItemRenderer
     if (i === 0) {
       if (e.playlistItemData)
         playlist.setVideoId = e.playlistItemData.playlistSetVideoId
     }
-    if (limit && i > limit - 1) return
-    playlist.content.push(parseSong(e, id))
-  })
+    if (limit && i > limit - 1) break
+
+    const song = parseSong(e, id);
+    if (song) {
+      playlist.content.push(song)
+    }
+  }
 
   return playlist;
 }

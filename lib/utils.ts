@@ -155,7 +155,7 @@ export function parser<T extends any[], R>(f: (...input: T) => R): (...input: T)
           input[0],
           null,
           2
-        )}`
+        )}\n${e.stack}`
       )
     }
   }
