@@ -82,7 +82,6 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_lib_endpoints_homepage_.html#getfullhomepage" class="tsd-kind-icon">get<wbr>Full<wbr>Home<wbr>Page</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_lib_endpoints_homepage_.html#gethomepage" class="tsd-kind-icon">get<wbr>Home<wbr>Page</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-module tsd-is-not-exported"><a href="_lib_endpoints_homepage_.html#gethomepagec" class="tsd-kind-icon">get<wbr>Home<wbr>PageC</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module tsd-is-not-exported"><a href="_lib_endpoints_homepage_.html#parsecarouselcontents" class="tsd-kind-icon">parse<wbr>Carousel<wbr>Contents</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module tsd-is-not-exported"><a href="_lib_endpoints_homepage_.html#parsecarouselitems" class="tsd-kind-icon">parse<wbr>Carousel<wbr>Items</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module tsd-is-not-exported"><a href="_lib_endpoints_homepage_.html#parseresponsivelistitemrenderer" class="tsd-kind-icon">parse<wbr>Responsive<wbr>List<wbr>Item<wbr>Renderer</a></li>
@@ -96,10 +95,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
 					<a name="parseflexcolumnrenderer" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> parse<wbr>Flex<wbr>Column<wbr>Renderer</h3>
-					<div class="tsd-signature tsd-kind-icon">parse<wbr>Flex<wbr>Column<wbr>Renderer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol"> = utils.parser&lt;any, CarouselItem&gt;((item: any) &#x3D;&gt; {return {thumbnail: [],title: item.text.runs[0].text,subtitle: [],navigationEndpoint: item.text.runs[0].navigationEndpoint}})</span></div>
+					<div class="tsd-signature tsd-kind-icon">parse<wbr>Flex<wbr>Column<wbr>Renderer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol"> = utils.parser((item: any) &#x3D;&gt; {return {thumbnail: [],title: item.text.runs[0].text,subtitle: [],navigationEndpoint: item.text.runs[0].navigationEndpoint} as CarouselItem})</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/5cbabc1/lib/endpoints/HomePage.ts#L29">lib/endpoints/HomePage.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/065fed0/lib/endpoints/HomePage.ts#L30">lib/endpoints/HomePage.ts:30</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -107,14 +106,14 @@
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-signature">
 								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-variable tsd-is-not-exported">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">R</span></li>
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">R</span></li>
 								</ul>
 								<ul class="tsd-descriptions">
 									<li class="tsd-description">
 										<h4 class="tsd-parameters-title">Parameters</h4>
 										<ul class="tsd-parameters">
 											<li>
-												<h5>input: <span class="tsd-signature-type">T</span></h5>
+												<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>input: <span class="tsd-signature-type">T</span></h5>
 											</li>
 										</ul>
 										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">R</span></h4>
@@ -127,10 +126,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
 					<a name="parsetworowitemrenderer" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> parse<wbr>Two<wbr>Row<wbr>Item<wbr>Renderer</h3>
-					<div class="tsd-signature tsd-kind-icon">parse<wbr>Two<wbr>Row<wbr>Item<wbr>Renderer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol"> = utils.parser&lt;any, CarouselItem&gt;((e: any) &#x3D;&gt; {const item: CarouselItem &#x3D; {thumbnail: [],title: e.title.runs[0],subtitle: [],navigationEndpoint: e.navigationEndpoint}e.thumbnailRenderer.musicThumbnailRenderer.thumbnail.thumbnails.forEach((el: any) &#x3D;&gt; item.thumbnail.push(el))e.subtitle.runs.forEach((el: any) &#x3D;&gt; {let sub: Subtitle &#x3D; {text: el.text}if (el.navigationEndpoint) {sub.navigationEndpoint &#x3D; el.navigationEndpoint}item.subtitle.push(sub)})return item})</span></div>
+					<div class="tsd-signature tsd-kind-icon">parse<wbr>Two<wbr>Row<wbr>Item<wbr>Renderer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol"> = utils.parser((e: any) &#x3D;&gt; {const item: CarouselItem &#x3D; {thumbnail: [],title: e.title.runs[0],subtitle: [],navigationEndpoint: e.navigationEndpoint}e.thumbnailRenderer.musicThumbnailRenderer.thumbnail.thumbnails.forEach((el: any) &#x3D;&gt; item.thumbnail.push(el))e.subtitle.runs.forEach((el: any) &#x3D;&gt; {let sub: Subtitle &#x3D; {text: el.text}if (el.navigationEndpoint) {sub.navigationEndpoint &#x3D; el.navigationEndpoint}item.subtitle.push(sub)})return item})</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/5cbabc1/lib/endpoints/HomePage.ts#L7">lib/endpoints/HomePage.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/065fed0/lib/endpoints/HomePage.ts#L8">lib/endpoints/HomePage.ts:8</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -138,14 +137,14 @@
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-signature">
 								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-variable tsd-is-not-exported">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">R</span></li>
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">R</span></li>
 								</ul>
 								<ul class="tsd-descriptions">
 									<li class="tsd-description">
 										<h4 class="tsd-parameters-title">Parameters</h4>
 										<ul class="tsd-parameters">
 											<li>
-												<h5>input: <span class="tsd-signature-type">T</span></h5>
+												<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>input: <span class="tsd-signature-type">T</span></h5>
 											</li>
 										</ul>
 										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">R</span></h4>
@@ -168,7 +167,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/5cbabc1/lib/endpoints/HomePage.ts#L206">lib/endpoints/HomePage.ts:206</a></li>
+									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/065fed0/lib/endpoints/HomePage.ts#L150">lib/endpoints/HomePage.ts:150</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -214,7 +213,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/5cbabc1/lib/endpoints/HomePage.ts#L100">lib/endpoints/HomePage.ts:100</a></li>
+									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/065fed0/lib/endpoints/HomePage.ts#L101">lib/endpoints/HomePage.ts:101</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -252,69 +251,6 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
-					<a name="gethomepagec" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> get<wbr>Home<wbr>PageC</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Home<wbr>PageC<span class="tsd-signature-symbol">(</span>cookie<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, cToken<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, itct<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>authUser<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>userID<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">(Anonymous function)</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/5cbabc1/lib/endpoints/HomePage.ts#L153">lib/endpoints/HomePage.ts:153</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Returns Continue of HomePage</p>
-								</div>
-								<dl class="tsd-comment-tags">
-									<dt>usage</dt>
-									<dd><pre><code class="language-js"> <span class="hljs-keyword">const</span> api = <span class="hljs-keyword">new</span> YTMUSIC(cookie)
- <span class="hljs-keyword">const</span> data = <span class="hljs-keyword">await</span> api.getHomePage()</code></pre>
-									</dd>
-								</dl>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>cookie: <span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li>
-									<h5>cToken: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>Continue token from prev. response</p>
-										</div>
-									</div>
-								</li>
-								<li>
-									<h5>itct: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>clickTrackingParams from prev. response
-											You can call <code>data.continue()</code> to get next part</p>
-										</div>
-									</div>
-								</li>
-								<li>
-									<h5>args: <span class="tsd-signature-symbol">{ </span>authUser<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>userID<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></h5>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter">
-											<h5><span class="tsd-flag ts-flagOptional">Optional</span> auth<wbr>User<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
-										</li>
-										<li class="tsd-parameter">
-											<h5><span class="tsd-flag ts-flagOptional">Optional</span> userID<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
-										</li>
-									</ul>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">(Anonymous function)</span></h4>
-							<p><a href="../interfaces/_models_homepage_.homepage.html">HomePage</a></p>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
 					<a name="parsecarouselcontents" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> parse<wbr>Carousel<wbr>Contents</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
@@ -324,7 +260,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/5cbabc1/lib/endpoints/HomePage.ts#L66">lib/endpoints/HomePage.ts:66</a></li>
+									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/065fed0/lib/endpoints/HomePage.ts#L67">lib/endpoints/HomePage.ts:67</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -347,7 +283,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/5cbabc1/lib/endpoints/HomePage.ts#L54">lib/endpoints/HomePage.ts:54</a></li>
+									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/065fed0/lib/endpoints/HomePage.ts#L55">lib/endpoints/HomePage.ts:55</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -370,7 +306,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/5cbabc1/lib/endpoints/HomePage.ts#L38">lib/endpoints/HomePage.ts:38</a></li>
+									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/065fed0/lib/endpoints/HomePage.ts#L39">lib/endpoints/HomePage.ts:39</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -396,6 +332,9 @@
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="_index_.html">&quot;index&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_lib_continuations_.html">&quot;lib/continuations&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="_lib_endpoints_browsing_.html">&quot;lib/endpoints/<wbr>Browsing&quot;</a>
@@ -469,9 +408,6 @@
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="_lib_endpoints_homepage_.html#gethomepage" class="tsd-kind-icon">get<wbr>Home<wbr>Page</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
-						<a href="_lib_endpoints_homepage_.html#gethomepagec" class="tsd-kind-icon">get<wbr>Home<wbr>PageC</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
 						<a href="_lib_endpoints_homepage_.html#parsecarouselcontents" class="tsd-kind-icon">parse<wbr>Carousel<wbr>Contents</a>

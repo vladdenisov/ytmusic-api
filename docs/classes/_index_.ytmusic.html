@@ -91,9 +91,9 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_index_.ytmusic.html#args" class="tsd-kind-icon">args</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_index_.ytmusic.html#authuser-1" class="tsd-kind-icon">auth<wbr>User</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_index_.ytmusic.html#authuser" class="tsd-kind-icon">auth<wbr>User</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_index_.ytmusic.html#cookie" class="tsd-kind-icon">cookie</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_index_.ytmusic.html#userid-1" class="tsd-kind-icon">userID</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_index_.ytmusic.html#userid" class="tsd-kind-icon">userID</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -119,13 +119,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new YTMUSIC<span class="tsd-signature-symbol">(</span>cookie<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>authUser<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>userID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_index_.ytmusic.html" class="tsd-signature-type">YTMUSIC</a></li>
+						<li class="tsd-signature tsd-kind-icon">new YTMUSIC<span class="tsd-signature-symbol">(</span>cookie<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, args<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">{ </span>authUser<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>userID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_index_.ytmusic.html" class="tsd-signature-type">YTMUSIC</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/5cbabc1/index.ts#L7">index.ts:7</a></li>
+									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/065fed0/index.ts#L7">index.ts:7</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -134,15 +134,7 @@
 									<h5>cookie: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
-									<h5>args: <span class="tsd-signature-symbol">{ </span>authUser<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>userID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></h5>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter">
-											<h5><span class="tsd-flag ts-flagOptional">Optional</span> auth<wbr>User<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
-										</li>
-										<li class="tsd-parameter">
-											<h5>userID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
-										</li>
-									</ul>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> args: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">{ </span>authUser<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>userID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_index_.ytmusic.html" class="tsd-signature-type">YTMUSIC</a></h4>
@@ -154,32 +146,21 @@
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="args" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> args</h3>
-					<div class="tsd-signature tsd-kind-icon">args<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>authUser<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>userID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></div>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> <span class="tsd-flag ts-flagOptional">Optional</span> args</h3>
+					<div class="tsd-signature tsd-kind-icon">args<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">{ </span>authUser<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>userID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/5cbabc1/index.ts#L10">index.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/065fed0/index.ts#L10">index.ts:10</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter">
-								<h5><span class="tsd-flag ts-flagOptional">Optional</span> auth<wbr>User<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
-							</li>
-							<li class="tsd-parameter">
-								<h5>userID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
-							</li>
-						</ul>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="authuser-1" class="tsd-anchor"></a>
+					<a name="authuser" class="tsd-anchor"></a>
 					<h3>auth<wbr>User</h3>
 					<div class="tsd-signature tsd-kind-icon">auth<wbr>User<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/5cbabc1/index.ts#L7">index.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/065fed0/index.ts#L7">index.ts:7</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -189,17 +170,17 @@
 					<div class="tsd-signature tsd-kind-icon">cookie<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/5cbabc1/index.ts#L9">index.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/065fed0/index.ts#L9">index.ts:9</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="userid-1" class="tsd-anchor"></a>
+					<a name="userid" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> userID</h3>
 					<div class="tsd-signature tsd-kind-icon">userID<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/5cbabc1/index.ts#L6">index.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/065fed0/index.ts#L6">index.ts:6</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -216,7 +197,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/5cbabc1/index.ts#L39">index.ts:39</a></li>
+									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/065fed0/index.ts#L39">index.ts:39</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -242,7 +223,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/5cbabc1/index.ts#L93">index.ts:93</a></li>
+									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/065fed0/index.ts#L93">index.ts:93</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -299,7 +280,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/5cbabc1/index.ts#L117">index.ts:117</a></li>
+									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/065fed0/index.ts#L117">index.ts:117</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -339,7 +320,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/5cbabc1/index.ts#L144">index.ts:144</a></li>
+									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/065fed0/index.ts#L144">index.ts:144</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -362,7 +343,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/5cbabc1/index.ts#L52">index.ts:52</a></li>
+									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/065fed0/index.ts#L52">index.ts:52</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -391,7 +372,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/5cbabc1/index.ts#L34">index.ts:34</a></li>
+									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/065fed0/index.ts#L34">index.ts:34</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -421,7 +402,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/5cbabc1/index.ts#L37">index.ts:37</a></li>
+									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/065fed0/index.ts#L37">index.ts:37</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -447,7 +428,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/5cbabc1/index.ts#L132">index.ts:132</a></li>
+									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/065fed0/index.ts#L132">index.ts:132</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -498,7 +479,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/5cbabc1/index.ts#L71">index.ts:71</a></li>
+									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/065fed0/index.ts#L71">index.ts:71</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -553,6 +534,9 @@
 					</li>
 					<li class="current tsd-kind-module">
 						<a href="../modules/_index_.html">&quot;index&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_lib_continuations_.html">&quot;lib/continuations&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="../modules/_lib_endpoints_browsing_.html">&quot;lib/endpoints/<wbr>Browsing&quot;</a>
@@ -627,13 +611,13 @@
 								<a href="_index_.ytmusic.html#args" class="tsd-kind-icon">args</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_index_.ytmusic.html#authuser-1" class="tsd-kind-icon">auth<wbr>User</a>
+								<a href="_index_.ytmusic.html#authuser" class="tsd-kind-icon">auth<wbr>User</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="_index_.ytmusic.html#cookie" class="tsd-kind-icon">cookie</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_index_.ytmusic.html#userid-1" class="tsd-kind-icon">userID</a>
+								<a href="_index_.ytmusic.html#userid" class="tsd-kind-icon">userID</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_index_.ytmusic.html#addtoplaylist" class="tsd-kind-icon">add<wbr>ToPlaylist</a>
