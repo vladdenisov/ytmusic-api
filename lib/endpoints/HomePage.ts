@@ -116,7 +116,9 @@ export const getHomePage = async (
     response.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer
   const sectionListRenderer = data.content.sectionListRenderer
 
-  const content: Carousel[] = parseCarouselContents(sectionListRenderer.contents)
+  const content: Carousel[] = parseCarouselContents(
+    sectionListRenderer.contents
+  )
 
   const home: HomePage = {
     title: data.title,
@@ -128,7 +130,7 @@ export const getHomePage = async (
     args,
     parseCarouselContents,
     home,
-    sectionListRenderer,
+    sectionListRenderer
   )
 
   return home
@@ -155,12 +157,12 @@ export const getFullHomePage = async (
   const home = await getHomePage(cookie, args)
   while (true) {
     const t = await home.continue?.()
-    if (!t || !t.content) break;
+    if (!t || !t.content) break
 
     home.content?.push(...t.content)
-    if (!t.continue) break;
+    if (!t.continue) break
 
     home.continue = t.continue
   }
-  return home;
+  return home
 }

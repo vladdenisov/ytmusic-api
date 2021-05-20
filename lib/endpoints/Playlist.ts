@@ -21,8 +21,9 @@ const parsePlaylist = utils.parser((response: any, playlistId: string) => {
 })
 
 const parseSong = utils.parser((e: any, playlistId: string) => {
-  const primaryTextRun = e.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0]
-  const id = primaryTextRun?.navigationEndpoint?.watchEndpoint?.videoId;
+  const primaryTextRun =
+    e.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0]
+  const id = primaryTextRun?.navigationEndpoint?.watchEndpoint?.videoId
   if (!id) {
     // NOTE: It is apparently possible to have items that don't have an ID!
     // The Web UI renders them as disabled, and the only available action is to
@@ -32,37 +33,35 @@ const parseSong = utils.parser((e: any, playlistId: string) => {
   }
 
   return {
-      id,
-      duration:
-        e.fixedColumns[0].musicResponsiveListItemFixedColumnRenderer.text
-          .runs[0].text,
-      thumbnail: e.thumbnail.musicThumbnailRenderer.thumbnail.thumbnails,
-      title: primaryTextRun,
-      author:
-        e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs,
-      album:
-        e.flexColumns[2].musicResponsiveListItemFlexColumnRenderer.text.runs?.[0],
-      url: `https://music.youtube.com/watch?v=${id}&list=${playlistId}`
-    } as Song
+    id,
+    duration:
+      e.fixedColumns[0].musicResponsiveListItemFixedColumnRenderer.text.runs[0]
+        .text,
+    thumbnail: e.thumbnail.musicThumbnailRenderer.thumbnail.thumbnails,
+    title: primaryTextRun,
+    author:
+      e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs,
+    album:
+      e.flexColumns[2].musicResponsiveListItemFlexColumnRenderer.text.runs?.[0],
+    url: `https://music.youtube.com/watch?v=${id}&list=${playlistId}`
+  } as Song
 })
 
-const parsePlaylistContents = utils.parser((
-  contents: any,
-  playlistId: string,
-  limit: number | undefined,
-) => {
-  const content: Song[] = []
-  for (let i=0; i < contents.length; ++i) {
-    const e = contents[i].musicResponsiveListItemRenderer
-    if (limit && i > limit - 1) break
+const parsePlaylistContents = utils.parser(
+  (contents: any, playlistId: string, limit: number | undefined) => {
+    const content: Song[] = []
+    for (let i = 0; i < contents.length; ++i) {
+      const e = contents[i].musicResponsiveListItemRenderer
+      if (limit && i > limit - 1) break
 
-    const song = parseSong(e, playlistId);
-    if (song) {
-      content.push(song)
+      const song = parseSong(e, playlistId)
+      if (song) {
+        content.push(song)
+      }
     }
+    return content
   }
-  return content
-})
+)
 
 /**
  * Returns Playlist Info
@@ -87,36 +86,36 @@ export const getPlaylist = async (
   limit?: number
 ): Promise<Playlist> => {
   const response = await utils.sendRequest(cookie, {
-    id: id.startsWith("VL") ? id : `VL${id}`,
+    id: id.startsWith('VL') ? id : `VL${id}`,
     type: 'PLAYLIST',
     endpoint: 'browse',
     authUser: args.authUser
   })
-  const playlist = parsePlaylist(response, id);
-  playlist.playlistId = id;
+  const playlist = parsePlaylist(response, id)
+  playlist.playlistId = id
 
   const data =
     response.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer
       .content.sectionListRenderer.contents[0].musicPlaylistShelfRenderer
   if (!data.contents) return playlist
 
-  playlist.content = parsePlaylistContents(data.contents, id, limit);
+  playlist.content = parsePlaylistContents(data.contents, id, limit)
   if (data.contents[0].playlistItemData) {
     playlist.setVideoId = data.contents[0].playlistItemData.playlistSetVideoId
   }
 
-  const remainingLimit = limit ? limit - playlist.content.length : undefined;
+  const remainingLimit = limit ? limit - playlist.content.length : undefined
   if (remainingLimit == null || remainingLimit > 0) {
     playlist.continue = createContinuation(
       cookie,
       args,
       (contents) => parsePlaylistContents(contents, id, remainingLimit),
       playlist,
-      data,
+      data
     )
   }
 
-  return playlist;
+  return playlist
 }
 
 /**

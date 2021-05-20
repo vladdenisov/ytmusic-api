@@ -145,7 +145,9 @@ export function filterFlatMap<T, R>(
  * In the normal case, this is a no-op; if the function throws, however,
  * we will augment the thrown Error with context bout what was being parsed.
  */
-export function parser<T extends any[], R>(f: (...input: T) => R): (...input: T) => R {
+export function parser<T extends any[], R>(
+  f: (...input: T) => R
+): (...input: T) => R {
   return function parserWrapper(...input: T) {
     try {
       return f(...input)
