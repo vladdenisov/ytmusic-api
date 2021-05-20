@@ -1,5 +1,68 @@
 import Playlist from '../../models/Playlist'
+import { Song } from '../../models/Song'
+import { createContinuation } from '../continuations'
 import * as utils from '../utils'
+
+const parsePlaylist = utils.parser((response: any, playlistId: string) => {
+  const header = response.header.musicDetailHeaderRenderer
+    ? response.header.musicDetailHeaderRenderer
+    : response.header.musicEditablePlaylistDetailHeaderRenderer.header
+        .musicDetailHeaderRenderer
+  const playlist: Playlist = {
+    title: header.title.runs[0],
+    thumbnail:
+      header.thumbnail.croppedSquareThumbnailRenderer.thumbnail.thumbnails,
+    playlistId,
+    content: [],
+    subtitle: header.subtitle.runs,
+    secondSubtitle: header.secondSubtitle.runs
+  }
+  return playlist
+})
+
+const parseSong = utils.parser((e: any, playlistId: string) => {
+  const primaryTextRun =
+    e.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0]
+  const id = primaryTextRun?.navigationEndpoint?.watchEndpoint?.videoId
+  if (!id) {
+    // NOTE: It is apparently possible to have items that don't have an ID!
+    // The Web UI renders them as disabled, and the only available action is to
+    // remove them from the playlist. For now, we will wimply omit them from
+    // results, since having an optional ID would be quite a breaking change
+    return
+  }
+
+  return {
+    id,
+    duration:
+      e.fixedColumns[0].musicResponsiveListItemFixedColumnRenderer.text.runs[0]
+        .text,
+    thumbnail: e.thumbnail.musicThumbnailRenderer.thumbnail.thumbnails,
+    title: primaryTextRun,
+    author:
+      e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs,
+    album:
+      e.flexColumns[2].musicResponsiveListItemFlexColumnRenderer.text.runs?.[0],
+    url: `https://music.youtube.com/watch?v=${id}&list=${playlistId}`
+  } as Song
+})
+
+const parsePlaylistContents = utils.parser(
+  (contents: any, playlistId: string, limit: number | undefined) => {
+    const content: Song[] = []
+    for (let i = 0; i < contents.length; ++i) {
+      const e = contents[i].musicResponsiveListItemRenderer
+      if (limit && i > limit - 1) break
+
+      const song = parseSong(e, playlistId)
+      if (song) {
+        content.push(song)
+      }
+    }
+    return content
+  }
+)
+
 /**
  * Returns Playlist Info
  *
@@ -23,53 +86,38 @@ export const getPlaylist = async (
   limit?: number
 ): Promise<Playlist> => {
   const response = await utils.sendRequest(cookie, {
-    id: `VL${id}`,
+    id: id.startsWith('VL') ? id : `VL${id}`,
     type: 'PLAYLIST',
     endpoint: 'browse',
     authUser: args.authUser
   })
-  const header = response.header.musicDetailHeaderRenderer
-    ? response.header.musicDetailHeaderRenderer
-    : response.header.musicEditablePlaylistDetailHeaderRenderer.header
-        .musicDetailHeaderRenderer
+  const playlist = parsePlaylist(response, id)
+  playlist.playlistId = id
+
   const data =
     response.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer
       .content.sectionListRenderer.contents[0].musicPlaylistShelfRenderer
-  const playlist: Playlist = {
-    title: header.title.runs[0],
-    thumbnail:
-      header.thumbnail.croppedSquareThumbnailRenderer.thumbnail.thumbnails,
-    playlistId: id,
-    content: [],
-    subtitle: header.subtitle.runs,
-    secondSubtitle: header.secondSubtitle.runs
-  }
   if (!data.contents) return playlist
-  data.contents.map((e: any, i: number) => {
-    e = e.musicResponsiveListItemRenderer
-    if (i === 0) {
-      if (e.playlistItemData)
-        playlist.setVideoId = e.playlistItemData.playlistSetVideoId
-    }
-    if (limit && i > limit - 1) return
-    playlist.content.push({
-      id: e.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text
-        .runs[0].navigationEndpoint.watchEndpoint.videoId,
-      duration:
-        e.fixedColumns[0].musicResponsiveListItemFixedColumnRenderer.text
-          .runs[0].text,
-      thumbnail: e.thumbnail.musicThumbnailRenderer.thumbnail.thumbnails,
-      title:
-        e.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0],
-      author:
-        e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs,
-      album:
-        e.flexColumns[2].musicResponsiveListItemFlexColumnRenderer.text.runs[0],
-      url: `https://music.youtube.com/watch?v=${e.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0].navigationEndpoint.watchEndpoint.videoId}&list=${id}`
-    })
-  })
+
+  playlist.content = parsePlaylistContents(data.contents, id, limit)
+  if (data.contents[0].playlistItemData) {
+    playlist.setVideoId = data.contents[0].playlistItemData.playlistSetVideoId
+  }
+
+  const remainingLimit = limit ? limit - playlist.content.length : undefined
+  if (remainingLimit == null || remainingLimit > 0) {
+    playlist.continue = createContinuation(
+      cookie,
+      args,
+      (contents) => parsePlaylistContents(contents, id, remainingLimit),
+      playlist,
+      data
+    )
+  }
+
   return playlist
 }
+
 /**
  * Add song(s) to playlist
  *

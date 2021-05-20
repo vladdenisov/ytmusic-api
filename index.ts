@@ -7,7 +7,7 @@ export class YTMUSIC {
   authUser: number | undefined
   constructor(
     private cookie: string,
-    private args: { userID: string; authUser?: number }
+    private args?: { userID: string; authUser?: number }
   ) {
     this.cookie = cookie
     if (args?.userID) {

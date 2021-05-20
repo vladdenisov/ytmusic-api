@@ -6,7 +6,7 @@ export interface Song {
   readonly duration?: string
   readonly thumbnail: Thumbnail[]
   readonly author: Text[]
-  readonly album: Text
+  readonly album?: Text
   readonly url: string
   readonly id: string
 }
