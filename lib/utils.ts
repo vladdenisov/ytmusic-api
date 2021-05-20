@@ -145,14 +145,14 @@ export function filterFlatMap<T, R>(
  * In the normal case, this is a no-op; if the function throws, however,
  * we will augment the thrown Error with context bout what was being parsed.
  */
-export function parser<T, R>(f: (input: T) => R): (input: T) => R {
-  return function parserWrapper(input: T) {
+export function parser<T extends any[], R>(f: (...input: T) => R): (...input: T) => R {
+  return function parserWrapper(...input: T) {
     try {
-      return f(input)
+      return f(...input)
     } catch (e) {
       throw new Error(
         `Unexpected error: ${e.message}\nParsing: ${JSON.stringify(
-          input,
+          input[0],
           null,
           2
         )}`

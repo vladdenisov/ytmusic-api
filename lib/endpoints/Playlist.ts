@@ -1,5 +1,42 @@
 import Playlist from '../../models/Playlist'
+import { Song } from '../../models/Song'
 import * as utils from '../utils'
+
+const parsePlaylist = utils.parser((response: any, playlistId: string) => {
+  const header = response.header.musicDetailHeaderRenderer
+    ? response.header.musicDetailHeaderRenderer
+    : response.header.musicEditablePlaylistDetailHeaderRenderer.header
+        .musicDetailHeaderRenderer
+  const playlist: Playlist = {
+    title: header.title.runs[0],
+    thumbnail:
+      header.thumbnail.croppedSquareThumbnailRenderer.thumbnail.thumbnails,
+    playlistId,
+    content: [],
+    subtitle: header.subtitle.runs,
+    secondSubtitle: header.secondSubtitle.runs
+  }
+  return playlist
+})
+
+const parseSong = utils.parser((e: any, id: string) => {
+  return {
+      id: e.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text
+        .runs[0].navigationEndpoint.watchEndpoint.videoId,
+      duration:
+        e.fixedColumns[0].musicResponsiveListItemFixedColumnRenderer.text
+          .runs[0].text,
+      thumbnail: e.thumbnail.musicThumbnailRenderer.thumbnail.thumbnails,
+      title:
+        e.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0],
+      author:
+        e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs,
+      album:
+        e.flexColumns[2].musicResponsiveListItemFlexColumnRenderer.text.runs[0],
+      url: `https://music.youtube.com/watch?v=${e.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0].navigationEndpoint.watchEndpoint.videoId}&list=${id}`
+    } as Song
+});
+
 /**
  * Returns Playlist Info
  *
@@ -23,28 +60,19 @@ export const getPlaylist = async (
   limit?: number
 ): Promise<Playlist> => {
   const response = await utils.sendRequest(cookie, {
-    id: `VL${id}`,
+    id: id.startsWith("VL") ? id : `VL${id}`,
     type: 'PLAYLIST',
     endpoint: 'browse',
     authUser: args.authUser
   })
-  const header = response.header.musicDetailHeaderRenderer
-    ? response.header.musicDetailHeaderRenderer
-    : response.header.musicEditablePlaylistDetailHeaderRenderer.header
-        .musicDetailHeaderRenderer
+  const playlist = parsePlaylist(response, id);
+  playlist.playlistId = id;
+
   const data =
     response.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer
       .content.sectionListRenderer.contents[0].musicPlaylistShelfRenderer
-  const playlist: Playlist = {
-    title: header.title.runs[0],
-    thumbnail:
-      header.thumbnail.croppedSquareThumbnailRenderer.thumbnail.thumbnails,
-    playlistId: id,
-    content: [],
-    subtitle: header.subtitle.runs,
-    secondSubtitle: header.secondSubtitle.runs
-  }
   if (!data.contents) return playlist
+
   data.contents.map((e: any, i: number) => {
     e = e.musicResponsiveListItemRenderer
     if (i === 0) {
@@ -52,24 +80,12 @@ export const getPlaylist = async (
         playlist.setVideoId = e.playlistItemData.playlistSetVideoId
     }
     if (limit && i > limit - 1) return
-    playlist.content.push({
-      id: e.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text
-        .runs[0].navigationEndpoint.watchEndpoint.videoId,
-      duration:
-        e.fixedColumns[0].musicResponsiveListItemFixedColumnRenderer.text
-          .runs[0].text,
-      thumbnail: e.thumbnail.musicThumbnailRenderer.thumbnail.thumbnails,
-      title:
-        e.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0],
-      author:
-        e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs,
-      album:
-        e.flexColumns[2].musicResponsiveListItemFlexColumnRenderer.text.runs[0],
-      url: `https://music.youtube.com/watch?v=${e.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0].navigationEndpoint.watchEndpoint.videoId}&list=${id}`
-    })
+    playlist.content.push(parseSong(e, id))
   })
-  return playlist
+
+  return playlist;
 }
+
 /**
  * Add song(s) to playlist
  *

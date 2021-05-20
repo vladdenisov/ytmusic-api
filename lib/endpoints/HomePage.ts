@@ -4,7 +4,7 @@ import CarouselItem from '../../models/CarouselItem'
 import Subtitle from '../../models/Subtitle'
 import * as utils from '../utils'
 
-const parseTwoRowItemRenderer = utils.parser<any, CarouselItem>((e: any) => {
+const parseTwoRowItemRenderer = utils.parser((e: any) => {
   const item: CarouselItem = {
     thumbnail: [],
     title: e.title.runs[0],
@@ -26,13 +26,13 @@ const parseTwoRowItemRenderer = utils.parser<any, CarouselItem>((e: any) => {
   return item
 })
 
-const parseFlexColumnRenderer = utils.parser<any, CarouselItem>((item: any) => {
+const parseFlexColumnRenderer = utils.parser((item: any) => {
   return {
     thumbnail: [],
     title: item.text.runs[0].text,
     subtitle: [],
     navigationEndpoint: item.text.runs[0].navigationEndpoint
-  }
+  } as CarouselItem
 })
 
 function parseResponsiveListItemRenderer(e: any): CarouselItem[] | undefined {
