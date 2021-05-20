@@ -10,4 +10,5 @@ export default interface Playlist {
   playlistId: string
   content: Song[]
   setVideoId?: string
+  continue?: () => Promise<Playlist>
 }

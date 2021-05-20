@@ -3,6 +3,7 @@ import Carousel from '../../models/Carousel'
 import CarouselItem from '../../models/CarouselItem'
 import Subtitle from '../../models/Subtitle'
 import * as utils from '../utils'
+import { createContinuation } from '../continuations'
 
 const parseTwoRowItemRenderer = utils.parser((e: any) => {
   const item: CarouselItem = {
@@ -113,84 +114,25 @@ export const getHomePage = async (
 
   const data =
     response.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer
-  const contents = data.content.sectionListRenderer.contents
+  const sectionListRenderer = data.content.sectionListRenderer
 
-  const content: Carousel[] = parseCarouselContents(contents)
+  const content: Carousel[] = parseCarouselContents(sectionListRenderer.contents)
 
   const home: HomePage = {
     title: data.title,
     browseId: data.endpoint.browseEndpoint.browseId,
     content
   }
-  if (data.content.sectionListRenderer.continuations) {
-    home.continue = getHomePageC(
-      cookie,
-      data.content.sectionListRenderer.continuations[0].nextContinuationData
-        .continuation,
-      data.content.sectionListRenderer.continuations[0].nextContinuationData
-        .clickTrackingParams,
-      args
-    )
-  }
+  home.continue = createContinuation(
+    cookie,
+    args,
+    parseCarouselContents,
+    home,
+    sectionListRenderer,
+  )
+
   return home
 }
-
-/**
- * Returns Continue of HomePage
- *
- * @usage
- *
- * ```js
- *  const api = new YTMUSIC(cookie)
- *  const data = await api.getHomePage()
- * ```
- * @param cToken Continue token from prev. response
- * @param itct clickTrackingParams from prev. response
- * You can call `data.continue()` to get next part
- * @returns {@link HomePage}
- *
- */
-const getHomePageC =
-  (
-    cookie: string,
-    cToken: string,
-    itct: string,
-    args: {
-      userID?: string
-      authUser?: number
-    }
-  ) =>
-  async (): Promise<HomePage> => {
-    const body: any = utils.generateBody({ userID: args.userID })
-    const response = await utils.sendRequest(cookie, {
-      endpoint: 'browse',
-      body,
-      cToken,
-      itct,
-      authUser: args.authUser
-    })
-    const data = response.continuationContents.sectionListContinuation
-    const content: Carousel[] = parseCarouselContents(data.contents)
-    const home: HomePage = {
-      title:
-        response.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer
-          .title,
-      content,
-      browseId:
-        response.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer
-          .tabIdentifier
-    }
-    if (data.continuations) {
-      home.continue = getHomePageC(
-        cookie,
-        data.continuations[0].nextContinuationData.continuation,
-        data.continuations[0].nextContinuationData.clickTrackingParams,
-        args
-      )
-    }
-
-    return home
-  }
 
 /**
  * Returns Full HomePage
@@ -212,9 +154,13 @@ export const getFullHomePage = async (
 ) => {
   const home = await getHomePage(cookie, args)
   while (true) {
-    const t = await home.continue()
+    const t = await home.continue?.()
+    if (!t || !t.content) break;
+
     home.content?.push(...t.content)
-    if (!t.continue) return home
+    if (!t.continue) break;
+
     home.continue = t.continue
   }
+  return home;
 }

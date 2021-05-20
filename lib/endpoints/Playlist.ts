@@ -1,5 +1,6 @@
 import Playlist from '../../models/Playlist'
 import { Song } from '../../models/Song'
+import { createContinuation } from '../continuations'
 import * as utils from '../utils'
 
 const parsePlaylist = utils.parser((response: any, playlistId: string) => {
@@ -45,6 +46,24 @@ const parseSong = utils.parser((e: any, playlistId: string) => {
     } as Song
 })
 
+const parsePlaylistContents = utils.parser((
+  contents: any,
+  playlistId: string,
+  limit: number | undefined,
+) => {
+  const content: Song[] = []
+  for (let i=0; i < contents.length; ++i) {
+    const e = contents[i].musicResponsiveListItemRenderer
+    if (limit && i > limit - 1) break
+
+    const song = parseSong(e, playlistId);
+    if (song) {
+      content.push(song)
+    }
+  }
+  return content
+})
+
 /**
  * Returns Playlist Info
  *
@@ -81,18 +100,20 @@ export const getPlaylist = async (
       .content.sectionListRenderer.contents[0].musicPlaylistShelfRenderer
   if (!data.contents) return playlist
 
-  for (let i=0; i < data.contents.length; ++i) {
-    const e = data.contents[i].musicResponsiveListItemRenderer
-    if (i === 0) {
-      if (e.playlistItemData)
-        playlist.setVideoId = e.playlistItemData.playlistSetVideoId
-    }
-    if (limit && i > limit - 1) break
+  playlist.content = parsePlaylistContents(data.contents, id, limit);
+  if (data.contents[0].playlistItemData) {
+    playlist.setVideoId = data.contents[0].playlistItemData.playlistSetVideoId
+  }
 
-    const song = parseSong(e, id);
-    if (song) {
-      playlist.content.push(song)
-    }
+  const remainingLimit = limit ? limit - playlist.content.length : undefined;
+  if (remainingLimit == null || remainingLimit > 0) {
+    playlist.continue = createContinuation(
+      cookie,
+      args,
+      (contents) => parsePlaylistContents(contents, id, remainingLimit),
+      playlist,
+      data,
+    )
   }
 
   return playlist;
