@@ -170,16 +170,17 @@ export const addToPlaylist = async (
     return {
       status: response.status,
       playlistName:
-        response.actions[0].openPopupAction.popup.notificationActionRenderer.responseText.runs[1].text,
+        response.actions[0].openPopupAction.popup.notificationActionRenderer
+          .responseText.runs[1].text,
       ids,
       playlistId
     }
-  }
-  else {
+  } else {
     return {
       status: response.status,
-      error: 
-        response.actions[0].addToToastAction.item.notificationActionRenderer.responseText.runs[0].text,
+      error:
+        response.actions[0].addToToastAction.item.notificationActionRenderer
+          .responseText.runs[0].text,
       ids,
       playlistId
     }

@@ -99,7 +99,7 @@
 					<div class="tsd-signature tsd-kind-icon">parse<wbr>Playlist<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol"> = utils.parser((response: any, playlistId: string) &#x3D;&gt; {const header &#x3D; response.header.musicDetailHeaderRenderer? response.header.musicDetailHeaderRenderer: response.header.musicEditablePlaylistDetailHeaderRenderer.header.musicDetailHeaderRendererconst playlist: Playlist &#x3D; {title: header.title.runs[0],thumbnail:header.thumbnail.croppedSquareThumbnailRenderer.thumbnail.thumbnails,playlistId,content: [],subtitle: header.subtitle.runs,secondSubtitle: header.secondSubtitle.runs}return playlist})</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/c0422b8/lib/endpoints/Playlist.ts#L6">lib/endpoints/Playlist.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/e16bd57/lib/endpoints/Playlist.ts#L6">lib/endpoints/Playlist.ts:6</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -130,7 +130,7 @@
 					<div class="tsd-signature tsd-kind-icon">parse<wbr>Playlist<wbr>Contents<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol"> = utils.parser((contents: any, playlistId: string, limit: number | undefined) &#x3D;&gt; {const content: Song[] &#x3D; []for (let i &#x3D; 0; i &lt; contents.length; ++i) {const e &#x3D; contents[i].musicResponsiveListItemRendererif (limit &amp;&amp; i &gt; limit - 1) breakconst song &#x3D; parseSong(e, playlistId)if (song) {content.push(song)}}return content})</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/c0422b8/lib/endpoints/Playlist.ts#L50">lib/endpoints/Playlist.ts:50</a></li>
+							<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/e16bd57/lib/endpoints/Playlist.ts#L50">lib/endpoints/Playlist.ts:50</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -161,7 +161,7 @@
 					<div class="tsd-signature tsd-kind-icon">parse<wbr>Song<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol"> = utils.parser((e: any, playlistId: string) &#x3D;&gt; {const primaryTextRun &#x3D;e.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0]const id &#x3D; primaryTextRun?.navigationEndpoint?.watchEndpoint?.videoIdif (!id) {// NOTE: It is apparently possible to have items that don&#x27;t have an ID!// The Web UI renders them as disabled, and the only available action is to// remove them from the playlist. For now, we will wimply omit them from// results, since having an optional ID would be quite a breaking changereturn}return {id,duration:e.fixedColumns[0].musicResponsiveListItemFixedColumnRenderer.text.runs[0].text,thumbnail: e.thumbnail.musicThumbnailRenderer.thumbnail.thumbnails,title: primaryTextRun,author:e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs,album:e.flexColumns[2].musicResponsiveListItemFlexColumnRenderer.text.runs?.[0],url: &#x60;https://music.youtube.com/watch?v&#x3D;${id}&amp;list&#x3D;${playlistId}&#x60;} as Song})</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/c0422b8/lib/endpoints/Playlist.ts#L23">lib/endpoints/Playlist.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/e16bd57/lib/endpoints/Playlist.ts#L23">lib/endpoints/Playlist.ts:23</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -193,13 +193,13 @@
 					<a name="addtoplaylist" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> add<wbr>ToPlaylist</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>ToPlaylist<span class="tsd-signature-symbol">(</span>cookie<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>authUser<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>userID<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span>, ids<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span>, playlistId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span>ids<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>playlistId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>playlistName<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>status<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">add<wbr>ToPlaylist<span class="tsd-signature-symbol">(</span>cookie<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>authUser<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>userID<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span>, ids<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span>, playlistId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span>error<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>ids<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>playlistId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>playlistName<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>status<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/c0422b8/lib/endpoints/Playlist.ts#L141">lib/endpoints/Playlist.ts:141</a></li>
+									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/e16bd57/lib/endpoints/Playlist.ts#L141">lib/endpoints/Playlist.ts:141</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -246,7 +246,7 @@
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span>ids<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>playlistId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>playlistName<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>status<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span>error<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>ids<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>playlistId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>playlistName<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>status<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">&gt;</span></h4>
 							<pre><code class="language-js">{
 <span class="hljs-attr">status</span>: string
 playlistName?: string
@@ -266,7 +266,7 @@ playlistName?: string
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/c0422b8/lib/endpoints/Playlist.ts#L193">lib/endpoints/Playlist.ts:193</a></li>
+									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/e16bd57/lib/endpoints/Playlist.ts#L203">lib/endpoints/Playlist.ts:203</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -336,7 +336,7 @@ playlistName?: string
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/c0422b8/lib/endpoints/Playlist.ts#L236">lib/endpoints/Playlist.ts:236</a></li>
+									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/e16bd57/lib/endpoints/Playlist.ts#L246">lib/endpoints/Playlist.ts:246</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -390,7 +390,7 @@ playlistName?: string
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/c0422b8/lib/endpoints/Playlist.ts#L79">lib/endpoints/Playlist.ts:79</a></li>
+									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/e16bd57/lib/endpoints/Playlist.ts#L79">lib/endpoints/Playlist.ts:79</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -447,7 +447,7 @@ playlistName?: string
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/c0422b8/lib/endpoints/Playlist.ts#L273">lib/endpoints/Playlist.ts:273</a></li>
+									<li>Defined in <a href="https://github.com/vladdenisov/ytmusic-api/blob/e16bd57/lib/endpoints/Playlist.ts#L283">lib/endpoints/Playlist.ts:283</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
