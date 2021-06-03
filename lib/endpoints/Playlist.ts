@@ -151,6 +151,7 @@ export const addToPlaylist = async (
   playlistName?: string
   ids: string[]
   playlistId: string
+  error?: string
 }> => {
   if (!playlistId) throw new Error('You must specify playlist id')
   const body: any = utils.generateBody({ userID: args.userID })
@@ -165,15 +166,23 @@ export const addToPlaylist = async (
     authUser: args.authUser,
     endpoint: 'browse/edit_playlist'
   })
-  return {
-    status: response.status,
-    playlistName: response.actions[0].openPopupAction
-      ? response.actions[0].openPopupAction.popup.notificationActionRenderer
-          .responseText.runs[1].text
-      : response.actions[0].addToToastAction.item.notificationActionRenderer
-          .responseText.runs[0].text,
-    ids,
-    playlistId
+  if (response.actions[0].openPopupAction) {
+    return {
+      status: response.status,
+      playlistName:
+        response.actions[0].openPopupAction.popup.notificationActionRenderer.responseText.runs[1].text,
+      ids,
+      playlistId
+    }
+  }
+  else {
+    return {
+      status: response.status,
+      error: 
+        response.actions[0].addToToastAction.item.notificationActionRenderer.responseText.runs[0].text,
+      ids,
+      playlistId
+    }
   }
 }
 /**
