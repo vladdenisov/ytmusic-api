@@ -26,16 +26,16 @@ export const search = async (
   }
 ): Promise<
   | Array<{
-      type: 'song' | 'album' | 'playlist' | 'video' | 'artist'
-      title: Text
-      url: string
-      tracksCount?: number
-      thumbnails: Thumbnail[]
-      author?: Text
-      id?: string
-      album?: Text
-      [propName: string]: any
-    }>
+    type: 'song' | 'album' | 'playlist' | 'video' | 'artist'
+    title: Text
+    url: string
+    tracksCount?: number
+    thumbnails: Thumbnail[]
+    author?: Text
+    id?: string
+    album?: Text
+    [propName: string]: any
+  }>
   | Error
 > => {
   const body: any = utils.generateBody({ userID: args.userID })
@@ -65,7 +65,7 @@ export const search = async (
     body
   })
   if (response.error) throw new Error(response.error.status)
-  const contents = response.contents.sectionListRenderer.contents
+  const contents = response.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents
   let results: any = []
   if (contents[0].messageRenderer) return []
   contents.map((ctx: any) => {
