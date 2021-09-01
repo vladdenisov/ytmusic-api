@@ -91,16 +91,17 @@ export const sendRequest = async (
       ? JSON.stringify(args.body)
       : generateBody({ id: args.id, type: args.type, userID: args.userID })
   }
-  const addParams: string = `${args.cToken
+  const addParams: string = `${
+    args.cToken
       ? 'ctoken=' +
-      args.cToken +
-      '&continuation=' +
-      args.cToken +
-      '&itct=' +
-      args.itct +
-      '&'
+        args.cToken +
+        '&continuation=' +
+        args.cToken +
+        '&itct=' +
+        args.itct +
+        '&'
       : ''
-    }`
+  }`
   return fetch(
     `https://music.youtube.com/youtubei/v1/${args.endpoint}?${addParams}alt=json&key=AIzaSyC9XL3ZjWddXya6X74dJoCTL-WEYFDNX30`,
     options

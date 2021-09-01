@@ -126,7 +126,6 @@ export const search = async (
               e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs[4].text
             result.duration =
               e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs[6].text
-
           }
           if (type === 'user playlist') {
             result.type = 'playlist'
