@@ -103,24 +103,30 @@ export const search = async (
           result.author =
             e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs[2].text
           if (type === 'song') {
-            result.url = `https://music.youtube.com/watch?v=${e.playlistItemData.videoId}&list=${e.overlay.musicItemThumbnailOverlayRenderer.content.musicPlayButtonRenderer.playNavigationEndpoint.watchEndpoint.playlistId}`
+            if (e.playlistItemData) {
+              result.url = `https://music.youtube.com/watch?v=${e.playlistItemData.videoId}&list=${e.overlay.musicItemThumbnailOverlayRenderer.content.musicPlayButtonRenderer.playNavigationEndpoint.watchEndpoint.playlistId}`
+              result.id = e.playlistItemData.videoId
+            }
             result.album =
               e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs[4].text
             result.album_browse_id =
               e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs[4].navigationEndpoint.browseEndpoint.browseId
             result.duration =
               e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs[6].text
-            result.id = e.playlistItemData.videoId
+
             result.artist_browse_id =
               e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs[2].navigationEndpoint.browseEndpoint.browseId
           }
           if (type === 'video') {
-            result.url = `https://music.youtube.com/watch?v=${e.playlistItemData.videoId}&list=${e.overlay.musicItemThumbnailOverlayRenderer.content.musicPlayButtonRenderer.playNavigationEndpoint.watchEndpoint.playlistId}`
+            if (e.playlistItemData) {
+              result.url = `https://music.youtube.com/watch?v=${e.playlistItemData.videoId}&list=${e.overlay.musicItemThumbnailOverlayRenderer.content.musicPlayButtonRenderer.playNavigationEndpoint.watchEndpoint.playlistId}`
+              result.id = e.playlistItemData.videoId
+            }
             result.views =
               e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs[4].text
             result.duration =
               e.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs[6].text
-            result.id = e.playlistItemData.videoId
+
           }
           if (type === 'user playlist') {
             result.type = 'playlist'

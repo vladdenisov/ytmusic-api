@@ -1,6 +1,7 @@
 import * as HomePage from './lib/endpoints/HomePage'
 import * as Playlist from './lib/endpoints/Playlist'
 import * as Browsing from './lib/endpoints/Browsing'
+import * as Browse from './lib/endpoints/Browse'
 import { search } from './lib/endpoints/Search'
 export class YTMUSIC {
   userID?: string
@@ -34,6 +35,11 @@ export class YTMUSIC {
   getHomePage = async () => {
     return await HomePage.getHomePage(this.cookie, this)
   }
+
+  getPlaylists = async () => {
+    return await Browse.getPlaylists(this.cookie, this)
+  }
+
   getPlaylist = async (id: string, limit?: number) =>
     await Playlist.getPlaylist(this.cookie, this, id, limit)
   addToPlaylist = async (ids: string[], playlistId: string) =>
