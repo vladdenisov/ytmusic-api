@@ -3,6 +3,8 @@ import * as Playlist from './lib/endpoints/Playlist'
 import * as Browsing from './lib/endpoints/Browsing'
 import * as Browse from './lib/endpoints/Browse'
 import { search } from './lib/endpoints/Search'
+import { Player } from './lib/endpoints/Player'
+import { getURLVideoID } from './lib/utils'
 export class YTMUSIC {
   userID?: string
   authUser: number | undefined
@@ -76,7 +78,7 @@ export class YTMUSIC {
    */
   search = async (
     query: string,
-    options: {
+    options?: {
       filter?: 'songs' | 'albums' | 'playlists' | 'videos' | 'artists'
       max?: number
     }
@@ -149,4 +151,24 @@ export class YTMUSIC {
     )
   getArtist = async (channelId: string) =>
     Browsing.getArtist(this.cookie, this, channelId)
+
+  /**
+   * Get song info
+   *
+   * @usage
+   *
+   * ```js
+   *  const api = new YTMUSIC(cookie)
+   *  const song = await api.getSongInfo('https://music.youtube.com/watch?v=DPXHMBKY39M&feature=share')
+   *  console.log(song.title)
+   * ```
+   * @param url - Search query
+   *
+   */
+  getSongInfo = async (url: string) =>
+    await Player(
+      this.cookie,
+      this,
+      getURLVideoID(url)
+    )
 }

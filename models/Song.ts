@@ -2,7 +2,7 @@ import Thumbnail from './Thumbnail'
 import NavigationEndpoint from './NavigationEndpoint'
 
 export interface Song {
-  readonly title: Text
+  readonly title: Text | string
   readonly duration?: string
   readonly thumbnail: Thumbnail[]
   readonly author: Text[]
