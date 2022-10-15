@@ -166,9 +166,5 @@ export class YTMUSIC {
    *
    */
   getSongInfo = async (url: string) =>
-    await Player(
-      this.cookie,
-      this,
-      getURLVideoID(url)
-    )
+    await Player(this.cookie, this, getURLVideoID(url))
 }

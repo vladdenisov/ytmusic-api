@@ -4,7 +4,7 @@ import * as utils from '../utils'
 export const Player = async (
   cookie: string,
   args: any,
-  videoId: string,
+  videoId: string
 ): Promise<Song> => {
   const body: any = utils.generateBody({ userID: args.userID })
   body.videoId = videoId
@@ -15,7 +15,11 @@ export const Player = async (
     body
   })
   if (response.error) throw new Error(response.error.status)
-  const content = response.contents.singleColumnMusicWatchNextResultsRenderer.tabbedRenderer.watchNextTabbedResultsRenderer.tabs[0].tabRenderer.content.musicQueueRenderer.content.playlistPanelRenderer.contents[0].playlistPanelVideoRenderer
+  const content =
+    response.contents.singleColumnMusicWatchNextResultsRenderer.tabbedRenderer
+      .watchNextTabbedResultsRenderer.tabs[0].tabRenderer.content
+      .musicQueueRenderer.content.playlistPanelRenderer.contents[0]
+      .playlistPanelVideoRenderer
   return {
     title: content.title.runs[0].text,
     duration: content.lengthText.runs[0].text,

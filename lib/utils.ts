@@ -177,33 +177,34 @@ export function parser<T extends any[], R>(
  *  - https://www.youtube.com/embed/VIDEO_ID
  *  - https://music.youtube.com/watch?v=VIDEO_ID
  *  - https://gaming.youtube.com/watch?v=VIDEO_ID
- * 
+ *
  * Credit: https://github.com/fent/node-ytdl-core/blob/master/lib/url-utils.js
  * @param {string} link
  * @return {string}
  * @throws {Error} If unable to find a id
  * @throws {TypeError} If videoid doesn't match specs
  */
- const validQueryDomains = new Set([
+const validQueryDomains = new Set([
   'youtube.com',
   'www.youtube.com',
   'm.youtube.com',
   'music.youtube.com',
-  'gaming.youtube.com',
-]);
-const validPathDomains = /^https?:\/\/(youtu\.be\/|(www\.)?youtube\.com\/(embed|v|shorts)\/)/;
+  'gaming.youtube.com'
+])
+const validPathDomains =
+  /^https?:\/\/(youtu\.be\/|(www\.)?youtube\.com\/(embed|v|shorts)\/)/
 export const getURLVideoID = (link: string) => {
-  const parsed = new URL(link.trim());
-  let id = parsed.searchParams.get('v');
+  const parsed = new URL(link.trim())
+  let id = parsed.searchParams.get('v')
   if (validPathDomains.test(link.trim()) && !id) {
-    const paths = parsed.pathname.split('/');
-    id = parsed.host === 'youtu.be' ? paths[1] : paths[2];
+    const paths = parsed.pathname.split('/')
+    id = parsed.host === 'youtu.be' ? paths[1] : paths[2]
   } else if (parsed.hostname && !validQueryDomains.has(parsed.hostname)) {
-    throw Error('Not a YouTube domain');
+    throw Error('Not a YouTube domain')
   }
   if (!id) {
-    throw Error(`No video id found: "${link}"`);
+    throw Error(`No video id found: "${link}"`)
   }
-  id = id.substring(0, 11);
-  return id;
-};
+  id = id.substring(0, 11)
+  return id
+}
