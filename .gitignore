@@ -5,6 +5,7 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 package-lock.*
+.DS_Store
 # Config 
 config.json
 # Diagnostic reports (https://nodejs.org/api/report.html)
@@ -119,3 +120,5 @@ testing/
 !.yarn/plugins
 !.yarn/sdks
 !.yarn/versions
+
+.DS_Store
