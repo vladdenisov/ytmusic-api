@@ -10,8 +10,8 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 
 1. NodeJS 10+
-2. NPM
-3. Google Account
+2. Yarn v2
+3. Google Account (optional)
 
 ### Installing
 #### Using npm 
@@ -24,15 +24,25 @@ Clone github repo
 ```
 Install dependencies
 ```sh
-  $ npm i
+  $ yarn
 ```
 Build it
 ```sh
-  $ npm run build
+  $ yarn build
 ```
 You will see `dist` folder, where all built files are stored.
 
 ### Usage
+
+#### Anonymous usage
+
+You should be able to just use it, if you need only information-getting features: 
+
+```js
+  const api = new YTMUSIC()
+  const data = await api.getPlaylist('RDCLAK5uy_k1Wu8QbZASiGVqr1wmie9NIYo38aBqscQ')
+  console.log(data.title)
+```
 
 #### Getting the cookie
 Get the auth cookie from requests to YTMusic in your browser: 
