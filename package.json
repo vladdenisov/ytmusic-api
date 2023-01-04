@@ -3,7 +3,9 @@
   "version": "0.0.8",
   "description": "Unofficial Youtube Music Api",
   "main": "dist/index.js",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "keywords": [
     "youtube api",
     "youtube music",
