@@ -78,8 +78,8 @@
 				</a>
 				<ol>
 					<li>NodeJS 10+</li>
-					<li>NPM</li>
-					<li>Google Account</li>
+					<li>Yarn v2</li>
+					<li>Google Account (optional)</li>
 				</ol>
 				<a href="#installing" id="installing" style="color: inherit; text-decoration: none;">
 					<h3>Installing</h3>
@@ -94,13 +94,20 @@
 				<p>Clone github repo</p>
 				<pre><code class="language-sh">  $ git <span class="hljs-built_in">clone</span> https://github.com/vladdenisov/ytmusic-api </code></pre>
 				<p>Install dependencies</p>
-				<pre><code class="language-sh">  $ npm i</code></pre>
+				<pre><code class="language-sh">  $ yarn</code></pre>
 				<p>Build it</p>
-				<pre><code class="language-sh">  $ npm run build</code></pre>
+				<pre><code class="language-sh">  $ yarn build</code></pre>
 				<p>You will see <code>dist</code> folder, where all built files are stored.</p>
 				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
 					<h3>Usage</h3>
 				</a>
+				<a href="#anonymous-usage" id="anonymous-usage" style="color: inherit; text-decoration: none;">
+					<h4>Anonymous usage</h4>
+				</a>
+				<p>You should be able to just use it, if you need only information-getting features: </p>
+				<pre><code class="language-js">  <span class="hljs-keyword">const</span> api = <span class="hljs-keyword">new</span> YTMUSIC()
+  <span class="hljs-keyword">const</span> data = <span class="hljs-keyword">await</span> api.getPlaylist(<span class="hljs-string">&#x27;RDCLAK5uy_k1Wu8QbZASiGVqr1wmie9NIYo38aBqscQ&#x27;</span>)
+  <span class="hljs-built_in">console</span>.log(data.title)</code></pre>
 				<a href="#getting-the-cookie" id="getting-the-cookie" style="color: inherit; text-decoration: none;">
 					<h4>Getting the cookie</h4>
 				</a>
